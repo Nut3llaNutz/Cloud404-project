@@ -47,7 +47,7 @@ exports.createProject = async (req, res) => {
     const ownerId = req.user.id;
     
     // req.body contains the data sent from the React form (thanks to express.json middleware)
-    const { name, category, teamMembers, description } = req.body;
+    const { name, category, teamMembers, description, projectImages } = req.body;
     
     // --- Basic Server-side Validation ---
     if (!name || !teamMembers || !description) {
