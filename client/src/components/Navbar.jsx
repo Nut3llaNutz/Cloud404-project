@@ -6,8 +6,8 @@ const Navbar = () => {
     const { isLoggedIn, user, logout } = useUser(); // Get auth state and logout function
 
     return (
-        <nav className="fixed w-full z-10 glass border-b border-white/20">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+        <nav className="fixed w-full z-20 glass border-b border-white/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
                 <Link to="/" className="text-2xl font-extrabold text-indigo-700 hover:text-indigo-900 transition flex items-center gap-2">
                     <span className="text-3xl">🇮🇳</span>
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600">Swadeshi Hub</span>

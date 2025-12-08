@@ -20,7 +20,7 @@ function App() {
             {/* Navbar is outside the Routes so it appears on every page */}
             <Navbar />
             {/* pt-16 ensures content starts below the fixed navbar */}
-            <main className="pt-16 min-h-screen bg-gray-50">
+            <main className="pt-20 min-h-screen bg-gray-50 flex flex-col">
                 <Routes>
                     {/* Define the paths for your simple website */}
                     <Route path="/" element={<HomePage />} />
