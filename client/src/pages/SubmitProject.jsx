@@ -3,8 +3,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 const SubmitProject = () => {
+    // <-- NEW: Get the token from the user context
+    const { token, isLoggedIn } = useUser();
+
+    // Redirect if not logged in (basic client-side protection)
+    if (!isLoggedIn) {
+         // You can use useEffect here or just a simple check, but let's keep it simple:
+         return <div className="text-center p-16 text-xl">Please <Link to="/login" className="text-indigo-600">login</Link> to submit a project.</div>;
+    }
+
     const [formData, setFormData] = useState({
         name: '',
         category: 'Agriculture',
@@ -30,7 +40,11 @@ const SubmitProject = () => {
 
         // --- Data Submission (CREATE) ---
         try {
-            await axios.post(API_BASE_URL, payload);
+            await axios.post(API_BASE_URL, payload, {
+                headers: {
+                    'x-auth-token': token // <-- send the jwt token in the request headers
+                }
+            });
             setStatus('SUCCESS! Project submitted.');
             // Redirect user to the gallery after 2 seconds
             setTimeout(() => navigate('/projects'), 2000);
