@@ -13,4 +13,7 @@ router.post('/', auth, projectsController.createProject);
 // Maps DELETE request on /api/projects/:id to the deleteProject function
 router.delete('/:id', projectsController.deleteProject); 
 
+// PATCH /api/projects/:id/like - Updates the likes count for a specific project
+router.patch('/:id/like', auth, projectsController.likeProject);
+
 module.exports = router;

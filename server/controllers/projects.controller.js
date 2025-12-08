@@ -62,3 +62,23 @@ exports.deleteProject = async (req, res) => {
         res.status(500).json({ message: 'Could not delete project' });
     }
 };
+
+exports.likeProject = async (req, res) => {
+    try {
+        // Find the project by ID and atomically increment the 'likes' field by 1
+        const updatedProject = await Project.findByIdAndUpdate(
+            req.params.id, 
+            { $inc: { likes: 1 } }, 
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedProject) {
+            return res.status(404).json({ message: 'Project not found.' });
+        }
+
+        res.json(updatedProject); 
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error during like operation');
+    }
+};
