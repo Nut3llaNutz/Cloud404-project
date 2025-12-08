@@ -13,12 +13,25 @@ exports.getProjects = async (req, res) => {
         }
 
         // 2. Define Filtering Logic
-        // In the future, projects must be 'approved' by an admin to appear in the gallery.
-        // For now, we'll keep it simple, but the filter for status will go here:
         let filter = {};
 
-        // **FUTURE: UNCOMMENT THIS LINE FOR ADMIN REVIEW IMPLEMENTATION (Sprint 5)**
-        // filter = { status: 'approved' }; 
+        // Filter by Status (Default to 'approved' if not specified, unless query param says 'all' for admin)
+        if (req.query.status) {
+            filter.status = req.query.status;
+        } else {
+            // Default behavior: Show only approved projects to public
+            filter.status = 'approved';
+        }
+
+        // Filter by Featured
+        if (req.query.featured === 'true') {
+            filter.isFeatured = true;
+        }
+
+        // Filter by Category
+        if (req.query.category && req.query.category !== 'All') {
+            filter.category = req.query.category;
+        }
 
         // 3. Query the Database
         const projects = await Project.find(filter)
@@ -133,5 +146,52 @@ exports.likeProject = async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ message: 'Server Error during like operation', error: err.message });
+    }
+};
+
+// --- ADMIN CONTROLLERS ---
+
+// @desc    Update Project Status (Approve/Reject)
+// @route   PUT /api/projects/:id/status
+exports.updateProjectStatus = async (req, res) => {
+    const { status } = req.body; // 'approved' or 'rejected'
+
+    // Basic validation
+    if (!['approved', 'rejected', 'pending'].includes(status)) {
+        return res.status(400).json({ message: "Invalid status value." });
+    }
+
+    try {
+        const project = await Project.findByIdAndUpdate(
+            req.params.id,
+            { status: status },
+            { new: true } // Return the updated document
+        );
+
+        if (!project) return res.status(404).json({ message: 'Project not found' });
+
+        res.json(project);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error updating status');
+    }
+};
+
+// @desc    Toggle Featured Status
+// @route   PUT /api/projects/:id/feature
+exports.toggleProjectFeature = async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id);
+
+        if (!project) return res.status(404).json({ message: 'Project not found' });
+
+        // Toggle the boolean
+        project.isFeatured = !project.isFeatured;
+        await project.save();
+
+        res.json(project);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error toggling feature status');
     }
 };

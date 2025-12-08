@@ -7,21 +7,27 @@ import { useUser } from '../context/UserContext'; // <-- Import context
 const ProjectGallery = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { token, isLoggedIn, user } = useUser(); // <-- Get token and user
+    const [sortBy, setSortBy] = useState('newest'); // State for sorting
+    const [category, setCategory] = useState('All'); // State for filtering
+    const { token, isLoggedIn, user } = useUser();
 
     // --- Data Fetching (READ) ---
     useEffect(() => {
-        axios.get(API_BASE_URL)
+        setLoading(true);
+        let url = `${API_BASE_URL}?`;
+        if (sortBy === 'likes') url += `sort=likes&`;
+        if (category !== 'All') url += `category=${category}&`;
+
+        axios.get(url)
             .then(response => {
                 setProjects(response.data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error("Error fetching data from live API:", error);
-                // Critical: If API fails, show an error message
+                console.error("Error fetching data:", error);
                 setLoading(false);
             });
-    }, []);
+    }, [sortBy, category]); // Refetch when sorting or category changes
 
     // --- Handle Like Functionality ---
     const handleLike = async (projectId) => {
@@ -54,7 +60,39 @@ const ProjectGallery = () => {
 
     return (
         <div className="container mx-auto p-8 bg-gray-50">
-            <h2 className="text-4xl font-extrabold text-gray-800 mb-10 border-b-2 border-indigo-200 pb-3">Innovations Gallery</h2>
+            <div className="flex justify-between items-center mb-10 border-b-2 border-indigo-200 pb-3">
+                <h2 className="text-4xl font-extrabold text-gray-800">Innovations Gallery</h2>
+                <div className="flex flex-wrap items-center gap-4">
+                    {/* Category Filter */}
+                    <div className="flex items-center space-x-2">
+                        <label className="text-gray-600 font-medium">Category:</label>
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="p-2 border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                        >
+                            <option value="All">All Categories</option>
+                            <option>Agriculture</option>
+                            <option>Defense</option>
+                            <option>Healthcare</option>
+                            <option>Education</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                        <label className="text-gray-600 font-medium">Sort By:</label>
+                        <select
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="p-2 border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                        >
+                            <option value="newest">Newest First</option>
+                            <option value="likes">Most Liked</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {projects.map(project => {

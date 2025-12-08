@@ -8,8 +8,11 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ProjectGallery from './pages/ProjectGallery';
 import SubmitProject from './pages/SubmitProject';
-import Login from './pages/Login';  
+import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AdminDashboard from './pages/AdminDashboard';
+import About from './pages/About';
+import Footer from './components/Footer';
 
 function App() {
     return (
@@ -17,7 +20,7 @@ function App() {
             {/* Navbar is outside the Routes so it appears on every page */}
             <Navbar />
             {/* pt-16 ensures content starts below the fixed navbar */}
-            <main className="pt-16 min-h-screen bg-gray-50"> 
+            <main className="pt-16 min-h-screen bg-gray-50">
                 <Routes>
                     {/* Define the paths for your simple website */}
                     <Route path="/" element={<HomePage />} />
@@ -25,7 +28,10 @@ function App() {
                     <Route path="/submit" element={<SubmitProject />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/about" element={<About />} />
                 </Routes>
+                <Footer />
             </main>
         </Router>
     );
