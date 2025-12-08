@@ -12,12 +12,12 @@ const Navbar = () => {
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 glass border-b border-white/20 shadow-sm transition-all duration-300">
-            <div className="w-full px-6 md:px-12 h-20 grid grid-cols-2 md:grid-cols-3 items-center">
+            <div className="w-full px-4 md:px-12 h-16 md:h-20 grid grid-cols-2 md:grid-cols-3 items-center">
 
                 {/* LEFT: Branding */}
                 <div className="flex justify-start">
-                    <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 group">
-                        <span className="text-3xl group-hover:scale-110 transition-transform duration-300">🇮🇳</span>
+                    <Link to="/" className="text-lg md:text-2xl font-extrabold flex items-center gap-2 group">
+                        <span className="text-2xl md:text-3xl group-hover:scale-110 transition-transform duration-300">🇮🇳</span>
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600 tracking-tight">Swadeshi Hub</span>
                     </Link>
                 </div>

@@ -16,13 +16,13 @@ const HomePage = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <header className="bg-indigo-700 text-white text-center pt-32 pb-24 px-6 relative overflow-hidden">
+            <header className="bg-indigo-700 text-white text-center pt-24 pb-16 px-4 md:pt-32 md:pb-24 md:px-6 relative overflow-hidden">
                 <div className="relative z-10 max-w-4xl mx-auto">
-                    <h1 className="text-5xl font-extrabold mb-6 animate-fade-in-down">
+                    <h1 className="text-3xl md:text-5xl font-extrabold mb-6 animate-fade-in-down">
                         Student Innovation
-                        <span className="block text-indigo-200 text-3xl mt-4">Swadeshi for Atmanirbhar Bharat</span>
+                        <span className="block text-indigo-200 text-xl md:text-3xl mt-4">Swadeshi for Atmanirbhar Bharat</span>
                     </h1>
-                    <p className="text-xl mb-10 text-indigo-100 max-w-2xl mx-auto">
+                    <p className="text-base md:text-xl mb-10 text-indigo-100 max-w-2xl mx-auto">
                         Empowering the next generation of creators in Robotics and Drones.
                         Showcasing indigenous solutions for a self-reliant India.
                     </p>
@@ -44,7 +44,7 @@ const HomePage = () => {
             {featuredProjects.length > 0 && (
                 <section className="py-20 bg-gray-50">
                     <div className="container mx-auto px-6">
-                        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Featured Innovations</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12">Featured Innovations</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             {featuredProjects.map(project => (
                                 <div key={project._id} className="bg-white rounded-xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
