@@ -17,6 +17,10 @@ exports.getProjects = async (req, res) => {
 // @desc    Create a new project (CREATE)
 // @route   POST /api/projects
 exports.createProject = async (req, res) => {
+    if (!req.user || !req.user.id) {
+        // This means the token was invalid or missing. Respond with 401.
+        return res.status(401).json({ message: 'Authentication required to submit a project.' });
+    }
     // We get the owner ID from the auth middleware's req.user.id
     const ownerId = req.user.id;
     
