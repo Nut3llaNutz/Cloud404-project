@@ -24,6 +24,6 @@ module.exports = function (req, res, next) {
 
     } catch (err) {
         // Token is not valid (expired, corrupted, wrong secret)
-        res.status(401).json({ message: 'Token is not valid.' });
+        res.status(401).json({ message: 'Token failed verification: ' + err.message });
     }
 };
