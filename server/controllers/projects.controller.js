@@ -136,7 +136,7 @@ exports.likeProject = async (req, res) => {
             projectId,
             updateOperation,
             { new: true }
-        );
+        ).populate('owner', 'username organization contactNumber projectImages');
 
         res.json({
             message: `Project successfully ${actionMessage}.`,

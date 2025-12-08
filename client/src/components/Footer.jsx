@@ -27,14 +27,14 @@ const Footer = () => {
                     {/* Contact */}
                     <div>
                         <h4 className="text-lg font-semibold text-gray-900 mb-4">Contact</h4>
-                        <p className="text-gray-600">University Campus, Block C</p>
-                        <p className="text-gray-600">New Delhi, India</p>
-                        <p className="text-gray-600 mt-2">Email: info@swadeshi-hub.edu</p>
+                        <p className="text-gray-600">Lovely Professional University</p>
+                        <p className="text-gray-600">Phagwara, Punjab, India</p>
+                        <p className="text-gray-600 mt-2">Email: yuvrajbhardwaj2005yb@gmail.com</p>
                     </div>
                 </div>
 
                 <div className="border-t border-gray-300 pt-6 text-center text-sm text-gray-500">
-                    &copy; {new Date().getFullYear()} Swadeshi Innovation Component. Made with ❤️ for Atmanirbhar Bharat.
+                    &copy; {new Date().getFullYear()} Swadeshi Innovation. Made with ❤️ for Atmanirbhar Bharat.
                 </div>
             </div>
         </footer>

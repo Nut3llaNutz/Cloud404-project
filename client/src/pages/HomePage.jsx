@@ -85,7 +85,7 @@ const HomePage = () => {
             {/* Footer */}
             <footer className="bg-gray-900 text-indigo-200 py-10 mt-10">
                 <div className="container mx-auto text-center">
-                    <p>&copy; 2024 Swadeshi Innovation Component. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Swadeshi Innovation. All rights reserved.</p>
                 </div>
             </footer>
         </div>
