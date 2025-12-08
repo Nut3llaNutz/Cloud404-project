@@ -21,6 +21,10 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    projectImages: { // <-- CORRECT LOCATION: Attached to the submission
+    type: [String],
+    default: []
+    },
     dateSubmitted: {
         type: Date,
         default: Date.now,
@@ -35,6 +39,10 @@ const projectSchema = new mongoose.Schema({
     likes: { 
         type: Number, 
         default: 0 
+    },
+    likedBy: { // New field: Array to store User IDs who have liked
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
     },
     status: { // For Admin Review
         type: String, 

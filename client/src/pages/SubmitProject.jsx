@@ -34,8 +34,12 @@ const SubmitProject = () => {
 
         // Prepare data: Split team members string into an array
         const payload = {
-            ...formData,
-            teamMembers: formData.teamMembers.split(',').map(m => m.trim()),
+        name: formData.name,
+        category: formData.category,
+        teamMembers: formData.teamMembers.split(',').map(s => s.trim()),
+        description: formData.description,
+        // CRITICAL CORRECTION: Send the image URL as an array
+        projectImages: formData.imageUrl ? [formData.imageUrl] : [], 
         };
 
         // --- Data Submission (CREATE) ---
@@ -117,6 +121,17 @@ const SubmitProject = () => {
                         onChange={handleChange} 
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     ></textarea>
+                </label>
+
+                <label className="block mb-4">
+                    <span className="text-gray-700">Project Image URL (Optional)</span>
+                    <input 
+                        type="url" 
+                        name="imageUrl" 
+                        placeholder="Link to your project's main image"
+                        onChange={handleChange} 
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                    />
                 </label>
 
                 <button 

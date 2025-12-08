@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    contactEmail: { // New Contact Field
+        type: String,
+        trim: true
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

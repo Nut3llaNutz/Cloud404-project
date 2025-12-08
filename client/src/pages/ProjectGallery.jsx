@@ -25,27 +25,29 @@ const ProjectGallery = () => {
 
     // --- Handle Like Functionality ---
     const handleLike = async (projectId) => {
-        if (!isLoggedIn) {
-            alert("Please log in to like a project.");
-            return;
-        }
+    if (!isLoggedIn) {
+        alert("Please log in to interact with projects.");
+        return;
+    }
 
-        try {
-            // Send PATCH request with token to the new route
-            const res = await axios.patch(`${API_BASE_URL}/${projectId}/like`, {}, {
-                headers: { 'x-auth-token': token }
-            });
+    try {
+        const res = await axios.patch(`${API_BASE_URL}/${projectId}/like`, {}, {
+            headers: { 'x-auth-token': token }
+        });
 
-            // Update the state locally to reflect the new like count immediately
-            setProjects(projects.map(p => 
-                p._id === projectId ? { ...p, likes: res.data.likes } : p
-            ));
+        // Update the projects state with the fresh data from the server
+        // The server response now contains the full updated project object
+        const updatedProject = res.data.project; 
 
-        } catch (error) {
-            console.error("Error liking project:", error);
-            alert("Could not process like. Server error or invalid token.");
-        }
-    };
+        setProjects(projects.map(p => 
+            p._id === projectId ? updatedProject : p // Replace old project with updated one
+        ));
+
+    } catch (error) {
+        console.error("Error toggling like:", error);
+        alert(`Could not process like: ${error.response?.data?.message || 'Server connection error.'}`);
+    }
+};
 
     if (loading) return <div className="text-center p-16 text-2xl font-semibold text-indigo-500">📡 Loading Projects...</div>;
     if (projects.length === 0) return <div className="text-center p-16 text-xl text-gray-500">No projects submitted yet. Be the first!</div>;
@@ -55,30 +57,77 @@ const ProjectGallery = () => {
             <h2 className="text-4xl font-extrabold text-gray-800 mb-10 border-b-2 border-indigo-200 pb-3">Innovations Gallery</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.map(project => (
-                    <div key={project._id} className="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-indigo-600 transform hover:scale-[1.02] transition duration-300">
-                        {/* ... existing card content ... */}
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.name}</h3>
-                        <p className="text-sm font-semibold mb-3 text-green-600">
-                            Category: {project.category}
-                        </p>
-                        <p className="text-gray-700 mt-2 h-20 overflow-hidden">{project.description}</p>
+                {projects.map(project => {
+    // 1. Determine if the current logged-in user has liked this project
+    // 'user' comes from the useUser() hook and holds the current user's data
+    const isCurrentUserLiked = project.likedBy.includes(user?.id); 
 
-                        <div className="mt-5 pt-3 border-t flex justify-between items-center">
-                            {/* NEW LIKES SECTION */}
-                            <div className="text-lg font-bold text-gray-800 flex items-center">
-                                ❤️ {project.likes}
-                            </div>
-                            <button
-                                onClick={() => handleLike(project._id)}
-                                disabled={!isLoggedIn} // Disable button if not logged in
-                                className={`px-3 py-1 text-sm rounded-full transition ${isLoggedIn ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-                            >
-                                {isLoggedIn ? 'Like' : 'Login to Like'}
-                            </button>
-                        </div>
-                    </div>
-                ))}
+    return (
+        <div 
+            key={project._id} 
+            className="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-indigo-600 transform hover:scale-[1.02] transition duration-300"
+        >
+
+            {/* PROJECT IMAGE (Reads from Project Model) */}
+            {project.projectImages && project.projectImages[0] && (
+                <img 
+                    src={project.projectImages[0]} 
+                    alt={project.name} 
+                    className="w-full h-40 object-cover rounded-md mb-4"
+                />
+            )}
+
+            {/* PROJECT CORE DETAILS */}
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.name}</h3>
+            <p className="text-sm font-semibold mb-3 text-green-600">
+                Category: {project.category}
+            </p>
+            <p className="text-gray-700 mt-2 h-16 overflow-hidden text-ellipsis">{project.description}</p>
+            
+            {/* OWNER & CONTACT DETAILS (Reads from Populated User Data) */}
+            <div className="mt-5 pt-3 border-t">
+                
+                {/* Owner Name and Organization */}
+                <p className="text-sm font-semibold text-gray-700 mt-2">Team Lead:</p>
+                <p className="text-lg font-bold text-indigo-700">{project.owner?.username || 'N/A'}</p>
+                <p className="text-xs text-gray-500">{project.owner?.organization || 'Individual Contributor'}</p>
+
+                {/* Contact Info */}
+                <p className="text-xs text-gray-500 mt-2">
+                    Contact: 
+                    <a href={`mailto:${project.owner?.contactEmail}`} className="text-blue-500 hover:text-blue-700 ml-1">
+                        {project.owner?.contactEmail || 'Not Listed'}
+                    </a>
+                </p>
+            </div>
+
+            {/* LIKE BUTTON SECTION */}
+            <div className="mt-4 pt-3 border-t flex justify-between items-center">
+                
+                {/* Likes Display */}
+                <div className="text-lg font-bold text-gray-800 flex items-center">
+                    ❤️ {project.likes}
+                </div>
+                
+                {/* Like/Unlike Button Logic */}
+                <button
+                    onClick={() => handleLike(project._id)}
+                    disabled={!isLoggedIn} 
+                    className={`px-3 py-1 text-sm rounded-full transition 
+                        ${isLoggedIn 
+                            ? (isCurrentUserLiked 
+                                ? 'bg-indigo-500 text-white hover:bg-indigo-600' // UNLIKE Style
+                                : 'bg-red-500 text-white hover:bg-red-600') // LIKE Style
+                            : 'bg-gray-300 text-gray-500 cursor-not-allowed' // Disabled Style
+                        }`
+                    }
+                >
+                    {isLoggedIn ? (isCurrentUserLiked ? 'Unlike' : 'Like') : 'Login to Like'}
+                </button>
+            </div>
+        </div>
+    );
+})}
             </div>
         </div>
     );

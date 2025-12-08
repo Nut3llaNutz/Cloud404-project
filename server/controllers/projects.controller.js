@@ -5,12 +5,34 @@ const Project = require('../models/project.model');
 // @route   GET /api/projects
 exports.getProjects = async (req, res) => {
     try {
-        // Use the Mongoose Model to find all documents, sorting by newest first
-        const projects = await Project.find().sort({ dateSubmitted: -1 });
-        res.status(200).json(projects); // Send the list of projects back as JSON
+        // 1. Define Sorting Logic based on the query parameter (?sort=likes)
+        let sortOptions = { dateSubmitted: -1 }; // Default: Sort by Newest first
+
+        if (req.query.sort === 'likes') {
+            sortOptions = { likes: -1 }; // Sort by likes descending (Most Liked)
+        }
+
+        // 2. Define Filtering Logic
+        // In the future, projects must be 'approved' by an admin to appear in the gallery.
+        // For now, we'll keep it simple, but the filter for status will go here:
+        let filter = {};
+        
+        // **FUTURE: UNCOMMENT THIS LINE FOR ADMIN REVIEW IMPLEMENTATION (Sprint 5)**
+        // filter = { status: 'approved' }; 
+
+        // 3. Query the Database
+        const projects = await Project.find(filter)
+            .sort(sortOptions)
+            // 4. Population: Fetch related user data (owner details)
+            // We only expose non-sensitive fields to the public gallery:
+            .populate('owner', 'username organization contactEmail projectImages'); 
+
+        // 5. Respond with the retrieved data
+        res.json(projects);
+
     } catch (err) {
-        // If the database fails, send a 500 Server Error
-        res.status(500).json({ message: 'Server error retrieving projects' });
+        console.error("Server error retrieving projects:", err.message);
+        res.status(500).send('Server error retrieving projects');
     }
 };
 
@@ -33,7 +55,7 @@ exports.createProject = async (req, res) => {
     }
     
     // Create a new document instance based on the Mongoose Model
-    const newProject = new Project({ name, category, teamMembers, description, owner: ownerId });
+    const newProject = new Project({ name, category, teamMembers, description, owner: ownerId, projectImages: projectImages || [], });
 
     // TEMPORARY DEBUG: Show the exact object Mongoose is trying to save
     console.log('Attempting to save Project object:', newProject);
@@ -64,19 +86,48 @@ exports.deleteProject = async (req, res) => {
 };
 
 exports.likeProject = async (req, res) => {
-    try {
-        // Find the project by ID and atomically increment the 'likes' field by 1
-        const updatedProject = await Project.findByIdAndUpdate(
-            req.params.id, 
-            { $inc: { likes: 1 } }, 
-            { new: true } // Return the updated document
-        );
+    const userId = req.user.id; 
+    const projectId = req.params.id;
 
-        if (!updatedProject) {
+    try {
+        const project = await Project.findById(projectId);
+
+        if (!project) {
             return res.status(404).json({ message: 'Project not found.' });
         }
 
-        res.json(updatedProject); 
+        const alreadyLiked = project.likedBy.includes(userId);
+
+        let updateOperation = {};
+        let actionMessage;
+
+        if (alreadyLiked) {
+            // UNLIKE ACTION: Pull user ID and decrement likes
+            updateOperation = { 
+                $pull: { likedBy: userId }, 
+                $inc: { likes: -1 } 
+            };
+            actionMessage = 'unliked';
+        } else {
+            // LIKE ACTION: Push user ID and increment likes
+            updateOperation = { 
+                $push: { likedBy: userId }, 
+                $inc: { likes: 1 } 
+            };
+            actionMessage = 'liked';
+        }
+
+        const updatedProject = await Project.findByIdAndUpdate(
+            projectId, 
+            updateOperation, 
+            { new: true }
+        );
+
+        res.json({ 
+            message: `Project successfully ${actionMessage}.`,
+            project: updatedProject // Send the updated project data
+        });
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error during like operation');
