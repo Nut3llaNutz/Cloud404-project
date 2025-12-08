@@ -31,10 +31,15 @@ exports.createProject = async (req, res) => {
     // Create a new document instance based on the Mongoose Model
     const newProject = new Project({ name, category, teamMembers, description, owner: ownerId });
 
+    // TEMPORARY DEBUG: Show the exact object Mongoose is trying to save
+    console.log('Attempting to save Project object:', newProject);
+
     try {
         const savedProject = await newProject.save(); // Save the new document to the database
         res.status(201).json(savedProject); // Send back the newly created document with 201 status
     } catch (err) {
+        // CRITICAL: Log the detailed Mongoose error message
+        console.error("--- Mongoose Save Failed Error: ---", err);
         // If Mongoose validation fails (e.g., wrong data type), send a 400 Bad Request
         res.status(400).json({ message: err.message });
     }
