@@ -18,7 +18,7 @@ const Navbar = () => {
                 <div className="flex justify-start">
                     <Link to="/" className="text-lg md:text-2xl font-extrabold flex items-center gap-2 group">
                         <span className="text-2xl md:text-3xl group-hover:scale-110 transition-transform duration-300">🇮🇳</span>
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600 tracking-tight">Swadeshi Hub</span>
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600 tracking-tight">Swadeshi Tech Hub</span>
                     </Link>
                 </div>
 

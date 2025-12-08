@@ -8,7 +8,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     {/* Brand */}
                     <div>
-                        <h3 className="text-2xl font-bold text-indigo-800 mb-4">🇮🇳 Swadeshi Hub</h3>
+                        <h3 className="text-2xl font-bold text-indigo-800 mb-4">🇮🇳 Swadeshi Tech Hub</h3>
                         <p className="text-gray-600">
                             Empowering student innovators to build a self-reliant India through technology and creativity.
                         </p>
