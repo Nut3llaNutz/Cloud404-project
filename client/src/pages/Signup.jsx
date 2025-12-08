@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-    const [formData, setFormData] = useState({ username: '', email: '', password: '', organization: '' });
+    const [formData, setFormData] = useState({ username: '', email: '', password: '', organization: '', contactNumber: '' });
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const Signup = () => {
 
         try {
             // IMPORTANT: Replace this base URL with your Render API base URL (e.g., https://cloud404-api.onrender.com)
-            const BASE_URL = 'https://cloud404-project.onrender.com'; 
+            const BASE_URL = 'https://cloud404-project.onrender.com';
             const res = await axios.post(`${BASE_URL}/api/auth/signup`, formData);
 
             setMessage(`SUCCESS: ${res.data.message}. Redirecting to login...`);
@@ -40,14 +40,14 @@ const Signup = () => {
                     </div>
                 )}
 
-                {['username', 'email', 'password', 'organization'].map((field) => (
+                {['username', 'email', 'password', 'organization', 'contactNumber'].map((field) => (
                     <label key={field} className="block mb-4">
-                        <span className="text-gray-700 capitalize">{field.replace('password', 'Password (Min 6 Chars)')}</span>
-                        <input 
-                            type={field === 'password' ? 'password' : 'text'} 
-                            name={field} 
-                            required={field !== 'organization'}
-                            onChange={handleChange} 
+                        <span className="text-gray-700 capitalize">{field.replace('password', 'Password (Min 6 Chars)').replace('contactNumber', 'Contact Number')}</span>
+                        <input
+                            type={field === 'password' ? 'password' : 'text'}
+                            name={field}
+                            required={field !== 'organization' && field !== 'contactNumber'}
+                            onChange={handleChange}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border"
                         />
                     </label>

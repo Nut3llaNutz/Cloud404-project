@@ -28,14 +28,15 @@ exports.signup = async (req, res) => {
             username,
             email,
             password: hashedPassword, // Store the HASHED password
-            organization: organization || 'N/A'
+            organization: organization || 'N/A',
+            contactNumber: req.body.contactNumber || 'Not Listed'
         });
 
         await user.save();
 
         // 4. Respond with success (Do not send password back)
-        res.status(201).json({ 
-            message: "User registered successfully!", 
+        res.status(201).json({
+            message: "User registered successfully!",
             user: { id: user._id, username: user.username, email: user.email }
         });
 

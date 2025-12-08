@@ -22,32 +22,33 @@ const projectSchema = new mongoose.Schema({
         required: true,
     },
     projectImages: { // <-- CORRECT LOCATION: Attached to the submission
-    type: [String],
-    default: []
+        type: [String],
+        default: []
     },
     dateSubmitted: {
         type: Date,
         default: Date.now,
     },
-    
+
     // NEW FIELDS FOR PLATFORM
     owner: { // Links this project to the User who submitted it
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    likes: { 
-        type: Number, 
-        default: 0 
+    likes: {
+        type: Number,
+        default: 0
     },
     likedBy: { // New field: Array to store User IDs who have liked
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User',
+        default: []
     },
     status: { // For Admin Review
-        type: String, 
+        type: String,
         enum: ['pending', 'approved', 'rejected'],
-        default: 'pending' 
+        default: 'pending'
     },
     isFeatured: { // For Admin Highlights on Home Page
         type: Boolean,
