@@ -7,7 +7,7 @@ import { useUser } from '../context/UserContext'; // <-- Import context
 const ProjectGallery = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { token, isLoggedIn } = useUser(); // <-- Get token
+    const { token, isLoggedIn, user } = useUser(); // <-- Get token and user
 
     // --- Data Fetching (READ) ---
     useEffect(() => {

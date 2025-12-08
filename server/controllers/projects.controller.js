@@ -25,7 +25,7 @@ exports.getProjects = async (req, res) => {
             .sort(sortOptions)
             // 4. Population: Fetch related user data (owner details)
             // We only expose non-sensitive fields to the public gallery:
-            .populate('owner', 'username organization contactEmail projectImages');
+            .populate('owner', 'username organization contactNumber projectImages');
 
         // 5. Respond with the retrieved data
         res.json(projects);
