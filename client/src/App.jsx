@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ProjectGallery from './pages/ProjectGallery';
 import SubmitProject from './pages/SubmitProject';
+import Login from './pages/Login';  
+import Signup from './pages/Signup';
 
 function App() {
     return (
@@ -21,6 +23,8 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/projects" element={<ProjectGallery />} />
                     <Route path="/submit" element={<SubmitProject />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
                 </Routes>
             </main>
         </Router>

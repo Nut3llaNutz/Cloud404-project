@@ -25,6 +25,26 @@ const projectSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    
+    // NEW FIELDS FOR PLATFORM
+    owner: { // Links this project to the User who submitted it
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
+    },
+    likes: { 
+        type: Number, 
+        default: 0 
+    },
+    status: { // For Admin Review
+        type: String, 
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending' 
+    },
+    isFeatured: { // For Admin Highlights on Home Page
+        type: Boolean,
+        default: false
+    }
 });
 
 module.exports = mongoose.model('Project', projectSchema);

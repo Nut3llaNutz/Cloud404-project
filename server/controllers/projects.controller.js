@@ -17,6 +17,9 @@ exports.getProjects = async (req, res) => {
 // @desc    Create a new project (CREATE)
 // @route   POST /api/projects
 exports.createProject = async (req, res) => {
+    // We get the owner ID from the auth middleware's req.user.id
+    const ownerId = req.user.id;
+    
     // req.body contains the data sent from the React form (thanks to express.json middleware)
     const { name, category, teamMembers, description } = req.body;
     

@@ -22,6 +22,9 @@ mongoose.connect(MONGO_URI)
 const projectRoutes = require('./routes/projects.route');
 app.use('/api/projects', projectRoutes); // All project routes start with /api/projects
 
+const authRoutes = require('./routes/auth.route');
+app.use('/api/auth', authRoutes); // NEW AUTH ROUTE
+
 // Basic test route
 app.get('/', (req, res) => {
     res.send('Swadeshi Project Registry API is Running!');

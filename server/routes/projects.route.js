@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const projectsController = require('../controllers/projects.controller');
+const auth = require('../middleware/auth'); // Import the new middleware
 
 // Maps GET request on /api/projects to the getProjects function
 router.get('/', projectsController.getProjects); 
