@@ -29,7 +29,7 @@ exports.createProject = async (req, res) => {
     }
     
     // Create a new document instance based on the Mongoose Model
-    const newProject = new Project({ name, category, teamMembers, description });
+    const newProject = new Project({ name, category, teamMembers, description, owner: ownerId });
 
     try {
         const savedProject = await newProject.save(); // Save the new document to the database
