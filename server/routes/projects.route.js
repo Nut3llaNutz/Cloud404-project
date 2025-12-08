@@ -8,7 +8,7 @@ const auth = require('../middleware/auth'); // Import the new middleware
 router.get('/', projectsController.getProjects); 
 
 // Maps POST request on /api/projects to the createProject function
-router.post('/', projectsController.createProject); 
+router.post('/', auth, projectsController.createProject); 
 
 // Maps DELETE request on /api/projects/:id to the deleteProject function
 router.delete('/:id', projectsController.deleteProject); 
