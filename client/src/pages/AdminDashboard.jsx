@@ -68,10 +68,10 @@ const AdminDashboard = () => {
         }
     };
 
-    if (loading && projects.length === 0) return <div className="p-10 text-center text-indigo-600 font-bold">Loading Dashboard...</div>;
+    if (loading && projects.length === 0) return <div className="p-10 pt-32 text-center text-indigo-600 font-bold">Loading Dashboard...</div>;
 
     return (
-        <div className="container mx-auto p-8 pt-24 min-h-screen">
+        <div className="container mx-auto p-8 pt-32 min-h-screen">
             <h1 className="text-4xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-800">
                 Admin Dashboard
             </h1>
@@ -81,8 +81,8 @@ const AdminDashboard = () => {
                 <button
                     onClick={() => setActiveTab('pending')}
                     className={`pb-3 text-lg font-medium transition-colors duration-200 ${activeTab === 'pending'
-                            ? 'border-b-4 border-indigo-600 text-indigo-700'
-                            : 'text-gray-500 hover:text-gray-700'
+                        ? 'border-b-4 border-indigo-600 text-indigo-700'
+                        : 'text-gray-500 hover:text-gray-700'
                         }`}
                 >
                     Review Queue (Pending)
@@ -90,8 +90,8 @@ const AdminDashboard = () => {
                 <button
                     onClick={() => setActiveTab('approved')}
                     className={`pb-3 text-lg font-medium transition-colors duration-200 ${activeTab === 'approved'
-                            ? 'border-b-4 border-indigo-600 text-indigo-700'
-                            : 'text-gray-500 hover:text-gray-700'
+                        ? 'border-b-4 border-indigo-600 text-indigo-700'
+                        : 'text-gray-500 hover:text-gray-700'
                         }`}
                 >
                     Managed Projects (Approved)
@@ -148,8 +148,8 @@ const AdminDashboard = () => {
                                                 <button
                                                     onClick={() => handleFeatureToggle(project._id)}
                                                     className={`px-4 py-2 text-xs font-bold rounded transition shadow-sm w-32 ${project.isFeatured
-                                                            ? 'bg-yellow-400 text-yellow-900 border border-yellow-500 hover:bg-yellow-500'
-                                                            : 'bg-gray-200 text-gray-700 border border-gray-300 hover:bg-gray-300'
+                                                        ? 'bg-yellow-400 text-yellow-900 border border-yellow-500 hover:bg-yellow-500'
+                                                        : 'bg-gray-200 text-gray-700 border border-gray-300 hover:bg-gray-300'
                                                         }`}
                                                 >
                                                     {project.isFeatured ? '★ Featured' : '☆ Feature'}

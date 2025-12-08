@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 glass border-b border-white/20 shadow-sm transition-all duration-300">
-            <div className="max-w-7xl mx-auto px-6 h-20 grid grid-cols-2 md:grid-cols-3 items-center">
+            <div className="w-full px-6 md:px-12 h-20 grid grid-cols-2 md:grid-cols-3 items-center">
 
                 {/* LEFT: Branding */}
                 <div className="flex justify-start">

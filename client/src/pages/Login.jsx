@@ -20,11 +20,11 @@ const Login = () => {
 
         try {
             // IMPORTANT: Replace this base URL with your Render API base URL
-            const BASE_URL = 'https://cloud404-project.onrender.com'; 
+            const BASE_URL = 'https://cloud404-project.onrender.com';
             const res = await axios.post(`${BASE_URL}/api/auth/login`, formData);
 
             // Success: Use the context function to store token and user data
-            login(res.data.token, res.data.user); 
+            login(res.data.token, res.data.user);
 
             setMessage(`SUCCESS! Welcome, ${res.data.user.username}.`);
             setTimeout(() => navigate('/projects'), 1000); // Redirect to projects page
@@ -35,7 +35,7 @@ const Login = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 pt-12">
+        <div className="container mx-auto p-8 pt-32">
             <h2 className="text-3xl font-bold text-indigo-700 mb-6">Login to Submit Projects</h2>
             <form onSubmit={handleSubmit} className="max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200">
                 {message && (
@@ -46,12 +46,12 @@ const Login = () => {
 
                 <label className="block mb-4">
                     <span className="text-gray-700">Email</span>
-                    <input type="text" name="email" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border"/>
+                    <input type="text" name="email" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border" />
                 </label>
 
                 <label className="block mb-6">
                     <span className="text-gray-700">Password</span>
-                    <input type="password" name="password" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border"/>
+                    <input type="password" name="password" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border" />
                 </label>
 
                 <button type="submit" className="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">

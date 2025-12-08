@@ -30,7 +30,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 pt-12">
+        <div className="container mx-auto p-8 pt-32">
             <h2 className="text-3xl font-bold text-indigo-700 mb-6">Create Your Team Account</h2>
             <form onSubmit={handleSubmit} className="max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200">
                 {/* Message Display */}

@@ -16,7 +16,7 @@ const HomePage = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <header className="bg-indigo-700 text-white text-center py-24 px-6 relative overflow-hidden">
+            <header className="bg-indigo-700 text-white text-center pt-32 pb-24 px-6 relative overflow-hidden">
                 <div className="relative z-10 max-w-4xl mx-auto">
                     <h1 className="text-5xl font-extrabold mb-6 animate-fade-in-down">
                         Student Innovation

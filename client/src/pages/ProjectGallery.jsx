@@ -59,7 +59,7 @@ const ProjectGallery = () => {
     if (projects.length === 0) return <div className="text-center p-16 text-xl text-gray-500">No projects submitted yet. Be the first!</div>;
 
     return (
-        <div className="container mx-auto p-8 bg-gray-50">
+        <div className="container mx-auto p-8 pt-28 bg-gray-50">
             <div className="flex justify-between items-center mb-10 border-b-2 border-indigo-200 pb-3">
                 <h2 className="text-4xl font-extrabold text-gray-800">Innovations Gallery</h2>
                 <div className="flex flex-wrap items-center gap-4">
