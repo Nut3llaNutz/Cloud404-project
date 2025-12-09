@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const Signup = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '', organization: '' });
@@ -17,9 +18,8 @@ const Signup = () => {
         setMessage('Registering...');
 
         try {
-            // IMPORTANT: Replace this base URL with your Render API base URL (e.g., https://cloud404-api.onrender.com)
-            const BASE_URL = 'http://localhost:5000'; // Updated to local dev url for consistency
-            const res = await axios.post(`${BASE_URL}/api/auth/signup`, formData);
+            // Use the centralized API_BASE_URL (points to localhost:5000/api locally)
+            const res = await axios.post(`${API_BASE_URL}/auth/signup`, formData);
 
             setMessage(`SUCCESS: ${res.data.message}. Redirecting to login...`);
             setTimeout(() => navigate('/login'), 2000);

@@ -24,7 +24,7 @@ const AdminDashboard = () => {
             setLoading(true);
             try {
                 // Fetch based on current tab status
-                const res = await axios.get(`${API_BASE_URL}?status=${activeTab}`);
+                const res = await axios.get(`${API_BASE_URL}/projects?status=${activeTab}`);
                 setProjects(res.data);
                 setLoading(false);
             } catch (err) {
@@ -40,12 +40,11 @@ const AdminDashboard = () => {
 
     const handleStatusUpdate = async (id, newStatus) => {
         try {
-            await axios.put(`${API_BASE_URL}/${id}/status`, { status: newStatus }, {
+            await axios.put(`${API_BASE_URL}/projects/${id}/status`, { status: newStatus }, {
                 headers: { 'x-auth-token': token }
             });
             // Refresh list (easiest way handles moving between tabs implicitly)
             setProjects(projects.filter(p => p._id !== id));
-            alert(`Project ${newStatus} successfully!`);
         } catch (err) {
             console.error("Error updating status:", err);
             alert("Failed to update status.");
@@ -54,7 +53,7 @@ const AdminDashboard = () => {
 
     const handleFeatureToggle = async (id) => {
         try {
-            const res = await axios.put(`${API_BASE_URL}/${id}/feature`, {}, {
+            const res = await axios.put(`${API_BASE_URL}/projects/${id}/feature`, {}, {
                 headers: { 'x-auth-token': token }
             });
 
@@ -104,30 +103,30 @@ const AdminDashboard = () => {
                     {activeTab === 'pending' ? '🎉 No pending reviews! You are all caught up.' : 'No approved projects found.'}
                 </div>
             ) : (
-                <div className="overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-white">
+                <div className="overflow-x-auto rounded-xl shadow-lg border border-gray-100 bg-white">
                     <table className="min-w-full leading-normal">
                         <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Project Name</th>
-                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Owner</th>
-                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
-                                <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">Project Name</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">Owner</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">Category</th>
+                                <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
                             {projects.map(project => (
                                 <tr key={project._id} className="hover:bg-indigo-50/30 transition duration-150">
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="text-sm font-bold text-gray-900">{project.name}</div>
                                         <div className="text-xs text-gray-500">{new Date(project.dateSubmitted).toLocaleDateString()}</div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{project.owner?.username}</td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{project.owner?.username}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
                                         <span className="px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">
                                             {project.category}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 flex justify-center items-center gap-3">
+                                    <td className="px-6 py-4 flex justify-center items-center gap-3 whitespace-nowrap">
                                         {activeTab === 'pending' ? (
                                             <>
                                                 <button

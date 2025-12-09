@@ -27,10 +27,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    contactNumber: { // New Contact Field (Changed name from contactEmail based on feedback context)
-        type: String,
-        trim: true
-    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

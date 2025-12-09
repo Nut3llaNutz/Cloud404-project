@@ -6,8 +6,7 @@ const jwt = require('jsonwebtoken');
 // --- SIGNUP (Creates a new User) ---
 // server/controllers/auth.controller.js
 exports.signup = async (req, res) => {
-    console.log("DEBUG: Signup Body:", req.body); // DEBUG LOG
-    const { username, email, password, organization, contactNumber } = req.body;
+    const { username, email, password, organization } = req.body;
 
     if (!username || !email || !password) {
         return res.status(400).json({ message: "Please enter all required fields: username, email, and password." });
@@ -31,7 +30,6 @@ exports.signup = async (req, res) => {
             email,
             password: hashedPassword, // Store the HASHED password
             organization: organization || 'N/A',
-            contactNumber: contactNumber || 'N/A'
         });
 
         await user.save();
@@ -61,7 +59,6 @@ exports.login = async (req, res) => {
     try {
         // 1. Check if user exists
         const user = await User.findOne({ email });
-        console.log("DEBUG: Login User Found:", user); // DEBUG LOG
         if (!user) {
             return res.status(400).json({ message: "Invalid Credentials (User not found)" });
         }

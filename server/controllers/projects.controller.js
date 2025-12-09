@@ -13,7 +13,7 @@ exports.getProjects = async (req, res) => {
         }
 
         // 2. Define Filtering Logic
-        let filter = {};
+        let filter = { status: 'approved' }; // Default: Only show Approved projects
 
         // Filter by Status (e.g., ?status=approved or ?status=pending)
         if (req.query.status) {
@@ -73,7 +73,7 @@ exports.createProject = async (req, res) => {
     });
 
     // TEMPORARY DEBUG: Show the exact object Mongoose is trying to save
-    console.log('Attempting to save Project object:', newProject);
+    // console.log('Attempting to save Project object:', newProject);
 
     try {
         const savedProject = await newProject.save(); // Save the new document to the database
@@ -101,7 +101,7 @@ exports.deleteProject = async (req, res) => {
 };
 
 exports.likeProject = async (req, res) => {
-    console.log("DEBUG: Like Project Request Received:", req.params.id, "User:", req.user.id); // DEBUG LOG
+    // console.log("DEBUG: Like Project Request Received:", req.params.id, "User:", req.user.id); // DEBUG LOG
     const userId = req.user.id;
     const projectId = req.params.id;
 

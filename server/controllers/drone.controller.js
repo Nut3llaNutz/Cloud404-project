@@ -3,7 +3,7 @@ const Project = require('../models/project.model');
 // Get all Done projects
 exports.getDrones = async (req, res) => {
     try {
-        const projects = await Project.find({ category: 'Drones' })
+        const projects = await Project.find({ category: 'Drones', status: 'approved' })
             .populate('owner', 'username organization contactEmail')
             .sort({ dateSubmitted: -1 });
         res.json(projects);

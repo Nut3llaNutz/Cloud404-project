@@ -6,6 +6,24 @@ import { API_BASE_URL } from '../config';
 const HomePage = () => {
     const [stats, setStats] = useState({ total: 0, robotics: 0, drones: 0, innovators: 0 });
     const [featuredProjects, setFeaturedProjects] = useState([]); // [NEW] State for featured projects
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Auto-play Carousel
+    useEffect(() => {
+        if (featuredProjects.length <= 1) return;
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % featuredProjects.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [featuredProjects.length, currentIndex]); // [CHANGED] Added currentIndex to reset timer on interaction
+
+    const nextSlide = () => {
+        setCurrentIndex((prev) => (prev + 1) % featuredProjects.length);
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prev) => (prev === 0 ? featuredProjects.length - 1 : prev - 1));
+    };
 
     useEffect(() => {
         // Fetch Featured Projects
@@ -36,7 +54,7 @@ const HomePage = () => {
                             🚀 The Future is Here
                         </span>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    <h1 className="text-4xl md:text-7xl font-extrabold mb-6 leading-tight">
                         Swadeshi <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">Innovation</span> Hub
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
@@ -114,7 +132,7 @@ const HomePage = () => {
             </div>
 
 
-            {/* [NEW] FEATURED HIGHLIGHTS SECTION */}
+            {/* [NEW] FEATURED HIGHLIGHTS CAROUSEL */}
             {
                 featuredProjects.length > 0 && (
                     <div className="py-16 bg-white border-t border-gray-100">
@@ -124,31 +142,75 @@ const HomePage = () => {
                                 <h2 className="text-3xl font-extrabold text-gray-900 mt-2">Featured Highlights</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                                {featuredProjects.slice(0, 2).map((project, index) => (
-                                    <div key={project._id} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 items-center`}>
-                                        <div className="w-full md:w-1/2">
-                                            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                                                <div className="absolute inset-0 bg-indigo-600 mix-blend-multiply opacity-0 group-hover:opacity-20 transition duration-500"></div>
-                                                <img
-                                                    src={project.projectImages[0] || 'https://via.placeholder.com/800x600'}
-                                                    alt={project.name}
-                                                    className="w-full h-64 object-cover transform group-hover:scale-105 transition duration-700"
-                                                />
+                            <div className="relative max-w-5xl mx-auto group"> {/* added group for hover effect on controls */}
+                                {/* Main Carousel Container */}
+                                <div className="overflow-hidden rounded-2xl shadow-2xl bg-white relative min-h-[500px] md:h-[450px]">
+                                    <div
+                                        className="flex transition-transform duration-500 ease-in-out h-full"
+                                        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                                    >
+                                        {featuredProjects.map((project) => (
+                                            <div key={project._id} className="w-full flex-shrink-0 flex flex-col md:flex-row h-full">
+                                                {/* Image Side */}
+                                                <div className="w-full md:w-1/2 relative h-64 md:h-full">
+                                                    <div className="absolute inset-0 bg-indigo-900/10 mix-blend-multiply"></div>
+                                                    <img
+                                                        src={project.projectImages[0] || 'https://via.placeholder.com/800x600'}
+                                                        alt={project.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                    <div className="absolute top-4 left-4 inline-block px-3 py-1 text-xs font-bold tracking-wider text-white uppercase bg-black/50 backdrop-blur-md rounded-full">
+                                                        {project.category}
+                                                    </div>
+                                                </div>
+
+                                                {/* Content Side */}
+                                                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center text-left bg-white">
+                                                    <h3 className="text-3xl font-bold text-gray-900 mb-4">{project.name}</h3>
+                                                    <p className="text-gray-600 mb-8 text-lg leading-relaxed line-clamp-4">
+                                                        {project.description}
+                                                    </p>
+                                                    <div className="mt-auto">
+                                                        <Link
+                                                            to={project.category === 'Robotics' ? `/robotics/${project._id}` : project.category === 'Drones' ? `/drones/${project._id}` : `/projects/${project._id}`}
+                                                            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all transform hover:-translate-y-1"
+                                                        >
+                                                            View Full Details <span className="ml-2" aria-hidden="true">&rarr;</span>
+                                                        </Link>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="w-full md:w-1/2 text-left">
-                                            <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-indigo-500 uppercase bg-indigo-50 rounded-full">
-                                                {project.category}
-                                            </div>
-                                            <h3 className="text-2xl font-bold text-gray-900 mb-4">{project.name}</h3>
-                                            <p className="text-gray-600 mb-6 line-clamp-3">{project.description}</p>
-                                            <Link to={`/projects`} className="text-indigo-600 font-bold hover:text-indigo-800 transition flex items-center gap-2">
-                                                View Details <span aria-hidden="true">&rarr;</span>
-                                            </Link>
-                                        </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+
+                                {/* Navigation Arrows - Enhanced Styles */}
+                                <button
+                                    onClick={prevSlide}
+                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white text-gray-800 hover:text-indigo-600 p-3 rounded-full backdrop-blur-md border border-white/50 shadow-lg transition-all duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
+                                    aria-label="Previous slide"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button
+                                    onClick={nextSlide}
+                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white text-gray-800 hover:text-indigo-600 p-3 rounded-full backdrop-blur-md border border-white/50 shadow-lg transition-all duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
+                                    aria-label="Next slide"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+
+                                {/* Dots Indicator */}
+                                <div className="flex justify-center mt-6 space-x-2">
+                                    {featuredProjects.map((_, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => setCurrentIndex(idx)}
+                                            className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-8 bg-indigo-600' : 'w-2.5 bg-gray-300 hover:bg-gray-400'}`}
+                                            aria-label={`Go to slide ${idx + 1}`}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
