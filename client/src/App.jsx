@@ -10,8 +10,16 @@ import ProjectGallery from './pages/ProjectGallery';
 import SubmitProject from './pages/SubmitProject';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import RoboticsList from './pages/RoboticsList';
+import RoboticsDetail from './pages/RoboticsDetail';
+import AddRobotics from './pages/AddRobotics';
+import DroneList from './pages/DroneList';
+import DroneDetail from './pages/DroneDetail';
+import AddDrone from './pages/AddDrone';
+import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import About from './pages/About';
+import Contact from './pages/Contact';
 import Footer from './components/Footer';
 
 function App() {
@@ -19,19 +27,34 @@ function App() {
         <Router>
             {/* Navbar is outside the Routes so it appears on every page */}
             <Navbar />
-            <main className="min-h-screen bg-gray-50 flex flex-col">
+            {/* pt-16 ensures content starts below the fixed navbar */}
+            <main className="pt-20 min-h-screen bg-gray-50">
                 <Routes>
                     {/* Define the paths for your simple website */}
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/projects" element={<ProjectGallery />} />
                     <Route path="/submit" element={<SubmitProject />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
+
+                    {/* Robotics Routes */}
+                    <Route path="/robotics" element={<RoboticsList />} />
+                    <Route path="/robotics/:id" element={<RoboticsDetail />} />
+                    <Route path="/add-robotics" element={<AddRobotics />} />
+
+                    {/* Drone Routes */}
+                    <Route path="/drones" element={<DroneList />} />
+                    <Route path="/drones/:id" element={<DroneDetail />} />
+                    <Route path="/add-drone" element={<AddDrone />} />
+
+                    {/* General Pages */}
                     <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
                 </Routes>
-                <Footer />
             </main>
+            <Footer />
         </Router>
     );
 }

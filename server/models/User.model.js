@@ -2,11 +2,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+    username: { 
+        type: String, 
+        required: true, 
+        unique: true, 
+        trim: true 
     },
     email: {
         type: String,
@@ -15,19 +15,19 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     password: { // This will store the HASHED password
-        type: String,
-        required: true
+        type: String, 
+        required: true 
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+    role: { 
+        type: String, 
+        enum: ['user', 'admin'], 
+        default: 'user' 
     },
     organization: { // Stores team/organization info
         type: String,
         trim: true
     },
-    contactNumber: { // New Contact Field (swapped from email)
+    contactEmail: { // New Contact Field
         type: String,
         trim: true
     },

@@ -10,7 +10,7 @@ const projectSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['Agriculture', 'Defense', 'Healthcare', 'Education', 'Other'],
+        enum: ['Agriculture', 'Defense', 'Healthcare', 'Education', 'Robotics', 'Drones', 'Other'],
         default: 'Other',
     },
     teamMembers: {
@@ -41,9 +41,8 @@ const projectSchema = new mongoose.Schema({
         default: 0
     },
     likedBy: { // New field: Array to store User IDs who have liked
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User',
-        default: []
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     status: { // For Admin Review
         type: String,

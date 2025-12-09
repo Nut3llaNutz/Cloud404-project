@@ -25,12 +25,24 @@ app.use('/api/projects', projectRoutes); // All project routes start with /api/p
 const authRoutes = require('./routes/auth.route');
 app.use('/api/auth', authRoutes); // NEW AUTH ROUTE
 
+const roboticsRoutes = require('./routes/robotics.route');
+app.use('/api/robotics', roboticsRoutes); // ROBOTICS ROUTES
+
+const feedbackRoutes = require('./routes/feedback.route');
+app.use('/api/feedback', feedbackRoutes); // FEEDBACK ROUTES
+
+const droneRoutes = require('./routes/drone.route');
+app.use('/api/drones', droneRoutes); // DRONE ROUTES
+
+const statsRoutes = require('./routes/stats.route');
+app.use('/api/stats', statsRoutes); // STATS ROUTES
+
 // Basic test route
 app.get('/', (req, res) => {
-    res.send('Swadeshi Project Registry API is Running!');
+  res.send('Swadeshi Project Registry API is Running!');
 });
 
 // --- START SERVER ---
 app.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });

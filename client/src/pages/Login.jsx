@@ -35,32 +35,53 @@ const Login = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 pt-32">
-            <h2 className="text-3xl font-bold text-indigo-700 mb-6">Login to Submit Projects</h2>
-            <form onSubmit={handleSubmit} className="max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-                {message && (
-                    <div className={`p-3 mb-4 rounded-lg text-white font-semibold ${message.startsWith('SUCCESS') ? 'bg-green-500' : 'bg-red-500'}`}>
-                        {message}
+        <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gray-50 px-4">
+            <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-extrabold text-gray-900">Welcome Back</h2>
+                    <p className="text-gray-500 mt-2">Sign in to manage your projects</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {message && (
+                        <div className={`p-4 rounded-lg text-sm font-medium ${message.startsWith('SUCCESS') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                            {message}
+                        </div>
+                    )}
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input
+                            type="text"
+                            name="email"
+                            required
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition outline-none"
+                            placeholder="you@example.com"
+                        />
                     </div>
-                )}
 
-                <label className="block mb-4">
-                    <span className="text-gray-700">Email</span>
-                    <input type="text" name="email" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border" />
-                </label>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            required
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition outline-none"
+                            placeholder="••••••••"
+                        />
+                    </div>
 
-                <label className="block mb-6">
-                    <span className="text-gray-700">Password</span>
-                    <input type="password" name="password" required onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 p-2 border" />
-                </label>
+                    <button type="submit" className="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transform hover:-translate-y-0.5 transition duration-200 shadow-lg">
+                        Sign In
+                    </button>
 
-                <button type="submit" className="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">
-                    Login
-                </button>
-                <p className="mt-4 text-center text-sm text-gray-500">
-                    Need an account? <Link to="/signup" className="text-indigo-600 hover:text-indigo-800 font-medium">Register here</Link>
-                </p>
-            </form>
+                    <p className="text-center text-sm text-gray-600 mt-4">
+                        Don't have an account? <Link to="/signup" className="text-indigo-600 hover:text-indigo-800 font-semibold hover:underline">Create account</Link>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 };

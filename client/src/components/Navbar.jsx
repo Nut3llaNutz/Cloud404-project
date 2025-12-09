@@ -1,119 +1,107 @@
-// client/src/components/Navbar.jsx
-import React from 'react'; // Import React for useState
-import { Link } from 'react-router-dom';
-import { useUser } from '../context/UserContext'; // Import context
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 const Navbar = () => {
     const { isLoggedIn, user, logout } = useUser();
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
 
-    // Close menu when route changes
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const isActive = (path) => location.pathname === path ? 'text-indigo-600 font-bold' : 'text-gray-600 hover:text-indigo-600';
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 glass border-b border-white/20 shadow-sm transition-all duration-300">
-            <div className="w-full px-4 md:px-12 h-16 md:h-20 grid grid-cols-2 md:grid-cols-3 items-center">
+        <nav className="fixed w-full z-20 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-20">
 
-                {/* LEFT: Branding */}
-                <div className="flex justify-start">
-                    <Link to="/" className="text-lg md:text-2xl font-extrabold flex items-center gap-2 group">
-                        <span className="text-2xl md:text-3xl group-hover:scale-110 transition-transform duration-300">🇮🇳</span>
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600 tracking-tight">Swadeshi Tech Hub</span>
+                    {/* LOGO */}
+                    <Link to="/" className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 tracking-wide hover:scale-105 transition duration-300">
+                        🇮🇳 Swadeshi<span className="text-orange-500">Hub</span>
                     </Link>
-                </div>
 
-                {/* CENTER: Navigation Links (Desktop Only) */}
-                <div className="hidden md:flex justify-center space-x-8">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/projects">Gallery</NavLink>
-                    <NavLink to="/about">About Us</NavLink>
-                </div>
+                    {/* DESKTOP MENU */}
+                    <div className="hidden lg:flex space-x-8 items-center bg-gray-50 px-8 py-2 rounded-full border border-gray-100 shadow-inner">
+                        <Link to="/projects" className={`transition font-medium text-sm ${isActive('/projects')}`}>Gallery</Link>
+                        <Link to="/robotics" className={`transition font-medium text-sm ${isActive('/robotics')}`}>Robotics</Link>
+                        <Link to="/drones" className={`transition font-medium text-sm ${isActive('/drones')}`}>Drones</Link>
+                        <Link to="/about" className={`transition font-medium text-sm ${isActive('/about')}`}>About</Link>
+                        <Link to="/contact" className={`transition font-medium text-sm ${isActive('/contact')}`}>Contact</Link>
+                    </div>
 
-                {/* RIGHT: User Actions (Desktop Only) */}
-                <div className="hidden md:flex justify-end items-center gap-4">
-                    {isLoggedIn ? (
-                        <>
-                            {user?.role === 'admin' && (
-                                <Link to="/admin" className="text-xs font-bold text-red-600 uppercase tracking-wider border border-red-200 px-2 py-1 rounded bg-red-50 hover:bg-red-100 transition">
-                                    Admin
+                    {/* ACTION BUTTONS */}
+                    <div className="hidden lg:flex items-center space-x-4">
+                        {isLoggedIn ? (
+                            <>
+                                {user?.role === 'admin' && (
+                                    <Link to="/admin" className="px-4 py-2 bg-gradient-to-r from-gray-800 to-black text-white rounded-full text-xs font-bold hover:shadow-lg hover:-translate-y-0.5 transition flex items-center gap-2">
+                                        <span>🛡️</span> Admin
+                                    </Link>
+                                )}
+                                <Link to="/dashboard" className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold text-xs">
+                                        {user?.username?.charAt(0).toUpperCase()}
+                                    </div>
+                                    <span className="text-sm font-semibold">{user?.username}</span>
                                 </Link>
-                            )}
-
-                            <div className="flex items-center gap-3 pl-4 border-l border-gray-300">
-                                <span className="text-sm font-semibold text-gray-700">{user?.username}</span>
-
-                                <Link to="/submit" className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-indigo-500/30 hover:scale-105 transition-all" title="Submit Project">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </Link>
-
-                                <button onClick={logout} className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-gray-100" title="Logout">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
+                                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-2 border border-red-200 text-red-500 rounded-full hover:bg-red-50 transition text-sm font-semibold">
+                                    Logout
                                 </button>
-                            </div>
-                        </>
-                    ) : (
-                        <div className="flex items-center gap-3">
-                            <Link to="/login" className="text-gray-600 font-medium hover:text-indigo-600 transition">Login</Link>
-                            <Link to="/signup" className="px-5 py-2 rounded-full bg-gray-900 text-white text-sm font-bold shadow-lg hover:bg-gray-800 hover:-translate-y-0.5 transition-all">
-                                Join Now
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className={`transition font-medium text-sm ${isActive('/login')}`}>Login</Link>
+                                <Link to="/signup" className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition text-sm font-bold">
+                                    Get Started
+                                </Link>
+                            </>
+                        )}
+                    </div>
 
-                {/* MOBILE MENU BUTTON (Right Aligned on Mobile) */}
-                <div className="flex justify-end md:hidden">
-                    <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            {isMenuOpen ? (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                            ) : (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                            )}
-                        </svg>
-                    </button>
+                    {/* MOBILE MENU BUTTON */}
+                    <div className="lg:hidden flex items-center">
+                        <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-gray-900 focus:outline-none">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {isOpen ? (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                ) : (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                                )}
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* MOBILE MENU DROPDOWN */}
-            {isMenuOpen && (
-                <div className="md:hidden glass border-t border-white/20 absolute w-full">
-                    <div className="px-4 pt-2 pb-6 space-y-2">
-                        <MobileNavLink to="/" onClick={toggleMenu}>Home</MobileNavLink>
-                        <MobileNavLink to="/projects" onClick={toggleMenu}>Gallery</MobileNavLink>
-                        <MobileNavLink to="/about" onClick={toggleMenu}>About Us</MobileNavLink>
+            {/* MOBILE DROPDOWN */}
+            {isOpen && (
+                <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 top-20 transition-all duration-300 ease-in-out">
+                    <div className="flex flex-col space-y-2 p-4">
+                        <Link to="/projects" onClick={() => setIsOpen(false)} className={`block px-4 py-2 rounded-md ${isActive('/projects')}`}>Gallery</Link>
+                        <Link to="/robotics" onClick={() => setIsOpen(false)} className={`block px-4 py-2 rounded-md ${isActive('/robotics')}`}>Robotics</Link>
+                        <Link to="/about" onClick={() => setIsOpen(false)} className={`block px-4 py-2 rounded-md ${isActive('/about')}`}>About</Link>
+                        <Link to="/contact" onClick={() => setIsOpen(false)} className={`block px-4 py-2 rounded-md ${isActive('/contact')}`}>Contact</Link>
 
-                        <div className="pt-4 mt-4 border-t border-gray-200">
+                        <div className="border-t border-gray-100 my-2 pt-2">
                             {isLoggedIn ? (
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-gray-800 font-semibold">Hi, {user?.username}</span>
-                                        {user?.role === 'admin' && (
-                                            <Link to="/admin" onClick={toggleMenu} className="text-xs font-bold text-red-600 uppercase border border-red-200 px-2 py-1 rounded bg-red-50">
-                                                Admin Panel
-                                            </Link>
-                                        )}
-                                    </div>
-                                    <Link to="/submit" onClick={toggleMenu} className="block w-full text-center py-2 bg-indigo-600 text-white rounded-lg font-semibold shadow-md">
-                                        Submit New Idea
+                                <>
+                                    <div className="px-4 py-2 text-gray-500 text-sm">Signed in as <span className="font-bold">{user?.username}</span></div>
+                                    {user?.role === 'admin' && (
+                                        <Link to="/admin" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md">
+                                            🛡️ Admin Panel
+                                        </Link>
+                                    )}
+                                    <Link to="/submit" onClick={() => setIsOpen(false)} className="block w-full text-left px-4 py-2 text-green-600 font-medium hover:bg-green-50 rounded-md">
+                                        + Submit Idea
                                     </Link>
-                                    <button onClick={() => { logout(); toggleMenu(); }} className="block w-full text-center py-2 border border-red-200 text-red-600 rounded-lg font-semibold hover:bg-red-50">
+                                    <button onClick={() => { logout(); setIsOpen(false); }} className="block w-full text-left px-4 py-2 text-red-600 font-medium hover:bg-red-50 rounded-md">
                                         Logout
                                     </button>
-                                </div>
+                                </>
                             ) : (
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Link to="/login" onClick={toggleMenu} className="block w-full text-center py-2 border border-gray-300 rounded-lg text-gray-700 font-semibold">
-                                        Login
-                                    </Link>
-                                    <Link to="/signup" onClick={toggleMenu} className="block w-full text-center py-2 bg-gray-900 text-white rounded-lg font-bold shadow-md">
-                                        Join Now
-                                    </Link>
-                                </div>
+                                <>
+                                    <Link to="/login" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-gray-600 hover:text-indigo-600 rounded-md">Login</Link>
+                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-indigo-600 font-bold hover:bg-indigo-50 rounded-md">Register</Link>
+                                </>
                             )}
                         </div>
                     </div>
@@ -122,26 +110,5 @@ const Navbar = () => {
         </nav>
     );
 };
-
-// Helper Component for styling links
-const NavLink = ({ to, children }) => (
-    <Link
-        to={to}
-        className="relative text-gray-600 font-medium text-base hover:text-indigo-600 transition-colors duration-300 group py-2"
-    >
-        {children}
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
-    </Link>
-);
-
-const MobileNavLink = ({ to, children, onClick }) => (
-    <Link
-        to={to}
-        onClick={onClick}
-        className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-700 hover:bg-indigo-50 transition"
-    >
-        {children}
-    </Link>
-);
 
 export default Navbar;

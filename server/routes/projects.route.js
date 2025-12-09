@@ -16,13 +16,10 @@ router.delete('/:id', projectsController.deleteProject);
 // PATCH /api/projects/:id/like - Updates the likes count for a specific project
 router.patch('/:id/like', auth, projectsController.likeProject);
 
-// --- ADMIN ROUTES ---
-const admin = require('../middleware/admin.middleware');
+// PUT /api/projects/:id/status - Admin approved/rejected
+router.put('/:id/status', auth, projectsController.updateStatus);
 
-// PUT /api/projects/:id/status - Admin Approve/Reject
-router.put('/:id/status', [auth, admin], projectsController.updateProjectStatus);
-
-// PUT /api/projects/:id/feature - Admin Feature/Unfeature
-router.put('/:id/feature', [auth, admin], projectsController.toggleProjectFeature);
+// PUT /api/projects/:id/feature - Admin toggle featured
+router.put('/:id/feature', auth, projectsController.toggleFeature);
 
 module.exports = router;

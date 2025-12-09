@@ -3,38 +3,50 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="glass border-t border-white/20 mt-auto pt-10 pb-6 text-gray-800 relative z-10">
-            <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <footer className="bg-gray-900 text-white pt-12 pb-8">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     {/* Brand */}
-                    <div>
-                        <h3 className="text-2xl font-bold text-indigo-800 mb-4">🇮🇳 Swadeshi Tech Hub</h3>
-                        <p className="text-gray-600">
-                            Empowering student innovators to build a self-reliant India through technology and creativity.
+                    <div className="col-span-1 md:col-span-2">
+                        <Link to="/" className="text-2xl font-extrabold text-white tracking-wide">
+                            🇮🇳 Swadeshi<span className="text-orange-500">Hub</span>
+                        </Link>
+                        <p className="mt-4 text-gray-400 max-w-sm">
+                            Empowering India's innovators to build the future. A central registry for Robotics, Drones, and cutting-edge technology projects.
                         </p>
                     </div>
 
-                    {/* Links */}
+                    {/* Quick Links */}
                     <div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h4>
+                        <h3 className="text-lg font-bold mb-4 text-indigo-400">Platform</h3>
                         <ul className="space-y-2">
-                            <li><Link to="/" className="text-gray-600 hover:text-indigo-600 transition">Home</Link></li>
-                            <li><Link to="/projects" className="text-gray-600 hover:text-indigo-600 transition">Gallery</Link></li>
-                            <li><Link to="/about" className="text-gray-600 hover:text-indigo-600 transition">About Us</Link></li>
+                            <li><Link to="/projects" className="text-gray-400 hover:text-white transition">Full Gallery</Link></li>
+                            <li><Link to="/robotics" className="text-gray-400 hover:text-white transition">Robotics Wing</Link></li>
+                            <li><Link to="/drones" className="text-gray-400 hover:text-white transition">Drone Hangar</Link></li>
+                            <li><Link to="/submit" className="text-gray-400 hover:text-white transition">Submit Idea</Link></li>
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* Support */}
                     <div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Contact</h4>
-                        <p className="text-gray-600">Lovely Professional University</p>
-                        <p className="text-gray-600">Phagwara, Punjab, India</p>
-                        <p className="text-gray-600 mt-2">Email: yuvrajbhardwaj2005yb@gmail.com</p>
+                        <h3 className="text-lg font-bold mb-4 text-green-400">Support</h3>
+                        <ul className="space-y-2">
+                            <li><Link to="/about" className="text-gray-400 hover:text-white transition">About Us</Link></li>
+                            <li><Link to="/contact" className="text-gray-400 hover:text-white transition">Contact</Link></li>
+                            <li><Link to="/login" className="text-gray-400 hover:text-white transition">Login / Register</Link></li>
+                        </ul>
                     </div>
                 </div>
 
-                <div className="border-t border-gray-300 pt-6 text-center text-sm text-gray-500">
-                    &copy; {new Date().getFullYear()} Swadeshi Innovation. Made with ❤️ for Atmanirbhar Bharat.
+                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-gray-500 text-sm">
+                        © {new Date().getFullYear()} Swadeshi Innovation Hub. Built for Atmanirbhar Bharat.
+                    </p>
+                    <div className="flex space-x-4 mt-4 md:mt-0">
+                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-twitter"></i> Twitter</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-github"></i> GitHub</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-linkedin"></i> LinkedIn</a>
+                    </div>
                 </div>
             </div>
         </footer>

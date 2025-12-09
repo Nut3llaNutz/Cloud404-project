@@ -15,30 +15,21 @@ exports.getProjects = async (req, res) => {
         // 2. Define Filtering Logic
         let filter = {};
 
-        // Filter by Status (Default to 'approved' if not specified, unless query param says 'all' for admin)
+        // Filter by Status (e.g., ?status=approved or ?status=pending)
         if (req.query.status) {
             filter.status = req.query.status;
-        } else {
-            // Default behavior: Show only approved projects to public
-            filter.status = 'approved';
         }
 
-        // Filter by Featured
+        // Filter by Featured (e.g., ?featured=true)
         if (req.query.featured === 'true') {
             filter.isFeatured = true;
-        }
-
-        // Filter by Category
-        if (req.query.category && req.query.category !== 'All') {
-            filter.category = req.query.category;
         }
 
         // 3. Query the Database
         const projects = await Project.find(filter)
             .sort(sortOptions)
-            // 4. Population: Fetch related user data (owner details)
-            // We only expose non-sensitive fields to the public gallery:
-            .populate('owner', 'username organization contactNumber projectImages');
+            // 4. Population: Fetch related related user data
+            .populate('owner', 'username organization contactEmail');
 
         // 5. Respond with the retrieved data
         res.json(projects);
@@ -67,8 +58,17 @@ exports.createProject = async (req, res) => {
         return res.status(400).json({ message: 'Missing required fields: Name, Team Members, and Description are mandatory.' });
     }
 
-    // Create a new document instance based on the Mongoose Model
-    const newProject = new Project({ name, category, teamMembers, description, owner: ownerId, projectImages: projectImages || [], });
+    // Default status is 'pending' and isFeatured is false (defined in model usually, but good to be explicit/safe)
+    const newProject = new Project({
+        name,
+        category,
+        teamMembers,
+        description,
+        owner: ownerId,
+        projectImages: projectImages || [],
+        status: 'pending',
+        isFeatured: false
+    });
 
     // TEMPORARY DEBUG: Show the exact object Mongoose is trying to save
     console.log('Attempting to save Project object:', newProject);
@@ -109,9 +109,7 @@ exports.likeProject = async (req, res) => {
             return res.status(404).json({ message: 'Project not found.' });
         }
 
-        // Ensure likedBy is an array (handle potentially missing field in old docs)
-        const likedBy = project.likedBy || [];
-        const alreadyLiked = likedBy.includes(userId);
+        const alreadyLiked = project.likedBy.includes(userId);
 
         let updateOperation = {};
         let actionMessage;
@@ -136,7 +134,7 @@ exports.likeProject = async (req, res) => {
             projectId,
             updateOperation,
             { new: true }
-        ).populate('owner', 'username organization contactNumber projectImages');
+        );
 
         res.json({
             message: `Project successfully ${actionMessage}.`,
@@ -145,53 +143,37 @@ exports.likeProject = async (req, res) => {
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ message: 'Server Error during like operation', error: err.message });
+        res.status(500).send('Server Error during like operation');
     }
 };
 
-// --- ADMIN CONTROLLERS ---
-
-// @desc    Update Project Status (Approve/Reject)
+// @desc    Update project status (Admin)
 // @route   PUT /api/projects/:id/status
-exports.updateProjectStatus = async (req, res) => {
-    const { status } = req.body; // 'approved' or 'rejected'
-
-    // Basic validation
-    if (!['approved', 'rejected', 'pending'].includes(status)) {
-        return res.status(400).json({ message: "Invalid status value." });
-    }
-
+exports.updateStatus = async (req, res) => {
     try {
+        const { status } = req.body; // 'approved' or 'rejected'
         const project = await Project.findByIdAndUpdate(
             req.params.id,
-            { status: status },
-            { new: true } // Return the updated document
+            { status },
+            { new: true }
         );
-
-        if (!project) return res.status(404).json({ message: 'Project not found' });
-
         res.json(project);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error updating status');
+        res.status(500).send('Server Error');
     }
 };
 
-// @desc    Toggle Featured Status
+// @desc    Toggle project feature status (Admin)
 // @route   PUT /api/projects/:id/feature
-exports.toggleProjectFeature = async (req, res) => {
+exports.toggleFeature = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id);
-
         if (!project) return res.status(404).json({ message: 'Project not found' });
 
-        // Toggle the boolean
         project.isFeatured = !project.isFeatured;
         await project.save();
-
         res.json(project);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error toggling feature status');
+        res.status(500).send('Server Error');
     }
 };
