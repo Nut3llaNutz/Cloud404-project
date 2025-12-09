@@ -2,9 +2,9 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className="container mx-auto p-8 bg-gray-50 min-h-screen">
-            <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-xl">
-                <h1 className="text-5xl font-extrabold text-indigo-700 mb-8 border-b-2 border-indigo-100 pb-4">
+        <div className="container mx-auto p-8 rainbow-bg min-h-screen pt-24">
+            <div className="max-w-4xl mx-auto bg-white/50 backdrop-blur-sm p-10 rounded-2xl shadow-xl">
+                <h1 className="text-5xl font-extrabold text-indigo-700 mb-8 border-indigo-100 pb-4">
                     About Us
                 </h1>
 

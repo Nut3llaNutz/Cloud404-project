@@ -44,58 +44,67 @@ const DroneDetail = () => {
     const isOwner = user && project.owner && user.id === project.owner._id;
 
     return (
-        <div className="container mx-auto p-8 bg-white shadow-lg rounded-lg mt-10 max-w-4xl border-t-4 border-sky-500">
-            <Link to="/drones" className="text-sky-500 hover:underline mb-4 block">← Back to Drones</Link>
+        <div className="container mx-auto p-8 rainbow-bg min-h-screen pt-24">
+            <div className="bg-white shadow-2xl rounded-2xl max-w-4xl mx-auto p-8 relative border-t-4 border-sky-500">
+                <Link to="/drones" className="inline-flex items-center text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-4 py-2 rounded-full mb-6 font-semibold transition-all hover:shadow-sm">
+                    ← Back to Drones
+                </Link>
 
-            <h1 className="text-4xl font-extrabold text-gray-900 mb-4">{project.name}</h1>
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4">{project.name}</h1>
 
-            {project.projectImages && project.projectImages.length > 0 && (
-                <div className="mb-6">
-                    <img src={project.projectImages[0]} alt={project.name} className="w-full h-96 object-cover rounded-lg shadow-md" />
+                {project.projectImages && project.projectImages.length > 0 && (
+                    <div className="mb-8 overflow-hidden rounded-xl shadow-md">
+                        <img src={project.projectImages[0]} alt={project.name} className="w-full h-[32rem] object-cover hover:scale-105 transition duration-500" />
+                    </div>
+                )}
+
+                <div className="mb-8">
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">Mission Description</h3>
+                    <p className="text-gray-700 leading-relaxed text-lg">{project.description}</p>
                 </div>
-            )}
 
-            <div className="mb-6">
-                <h3 className="text-xl font-bold text-gray-800">Mission Description</h3>
-                <p className="text-gray-700 mt-2 leading-relaxed">{project.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 bg-sky-50 p-6 rounded-xl border border-sky-100">
+                    <div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-3">Flight Crew</h3>
+                        <ul className="space-y-2">
+                            {project.teamMembers.map((member, index) => (
+                                <li key={index} className="flex items-center text-gray-700 bg-white px-3 py-2 rounded shadow-sm">
+                                    <span className="w-2 h-2 bg-sky-500 rounded-full mr-2"></span>
+                                    {member}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-3">Contact Control</h3>
+                        <div className="space-y-3 text-gray-700">
+                            <p className="flex items-center">
+                                <span className="font-semibold w-24">Lead:</span> {project.owner?.username || 'N/A'}
+                            </p>
+                            <p className="flex items-center">
+                                <span className="font-semibold w-24">Org:</span> {project.owner?.organization || 'N/A'}
+                            </p>
+                            <p className="flex items-center">
+                                <span className="font-semibold w-24">Email:</span> {project.contactEmail || 'N/A'}
+                            </p>
+                            <p className="flex items-center">
+                                <span className="font-semibold w-24">Phone:</span> {project.contactNumber || 'N/A'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {isOwner && (
+                    <div className="border-t pt-6 flex justify-end">
+                        <button
+                            onClick={handleDelete}
+                            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg shadow transition font-semibold"
+                        >
+                            Decommission Drone
+                        </button>
+                    </div>
+                )}
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div>
-                    <h3 className="text-xl font-bold text-gray-800">Flight Crew</h3>
-                    <ul className="list-disc list-inside text-gray-700 mt-2">
-                        {project.teamMembers.map((member, index) => (
-                            <li key={index}>{member}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <h3 className="text-xl font-bold text-gray-800">Contact Control</h3>
-                    <p className="text-gray-700 mt-2">
-                        <span className="font-semibold">Lead:</span> {project.owner?.username || 'N/A'}
-                    </p>
-                    <p className="text-gray-700">
-                        <span className="font-semibold">Organization:</span> {project.owner?.organization || 'N/A'}
-                    </p>
-                    <p className="text-gray-700">
-                        <span className="font-semibold">Email:</span> {project.contactEmail || 'N/A'}
-                    </p>
-                    <p className="text-gray-700">
-                        <span className="font-semibold">Phone:</span> {project.contactNumber || 'N/A'}
-                    </p>
-                </div>
-            </div>
-
-            {isOwner && (
-                <div className="border-t pt-6 flex justify-end">
-                    <button
-                        onClick={handleDelete}
-                        className="bg-red-500 text-white px-6 py-2 rounded shadow hover:bg-red-600 transition"
-                    >
-                        Decommission Drone
-                    </button>
-                </div>
-            )}
         </div>
     );
 };

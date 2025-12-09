@@ -82,7 +82,7 @@ const AddDrone = () => {
                         name="teamMembers"
                         value={formData.teamMembers}
                         onChange={handleChange}
-                        placeholder="Alice, Bob, Charlie"
+                        placeholder="P1, P2, P3"
                         className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                         required
                     />

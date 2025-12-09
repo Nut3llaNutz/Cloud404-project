@@ -54,7 +54,7 @@ const HomePage = () => {
                             🚀 The Future is Here
                         </span>
                     </div>
-                    <h1 className="text-4xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    <h1 className="text-3xl md:text-6xl font-extrabold mb-6 leading-tight">
                         Swadeshi <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">Innovation</span> Hub
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">

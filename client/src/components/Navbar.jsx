@@ -16,21 +16,24 @@ const Navbar = () => {
             <div className="w-full px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
 
-                    {/* LOGO */}
-                    <Link to="/" className="flex items-center hover:scale-105 transition duration-300">
-                        <img src={projectLogo} alt="SwadeshiHub Logo" className="h-20 w-auto" />
-                    </Link>
+                    {/* LEFT SIDE: LOGO + DESKTOP MENU */}
+                    <div className="flex items-center space-x-8">
+                        {/* LOGO */}
+                        <Link to="/" className="flex items-center hover:scale-105 transition duration-300">
+                            <img src={projectLogo} alt="SwadeshiHub Logo" className="h-20 w-auto" />
+                        </Link>
 
-                    {/* DESKTOP MENU */}
-                    <div className="hidden lg:flex space-x-8 items-center bg-gray-100 px-8 py-2 rounded-full border border-gray-100 shadow-inner">
-                        <Link to="/projects" className={`transition font-medium text-sm ${isActive('/projects')}`}>Gallery</Link>
-                        <Link to="/robotics" className={`transition font-medium text-sm ${isActive('/robotics')}`}>Robotics</Link>
-                        <Link to="/drones" className={`transition font-medium text-sm ${isActive('/drones')}`}>Drones</Link>
-                        <Link to="/about" className={`transition font-medium text-sm ${isActive('/about')}`}>About</Link>
-                        <Link to="/contact" className={`transition font-medium text-sm ${isActive('/contact')}`}>Contact</Link>
+                        {/* DESKTOP MENU (Moved here) */}
+                        <div className="hidden lg:flex space-x-6 items-center bg-gray-100 px-8 py-2 rounded-full border border-gray-100 shadow-inner">
+                            <Link to="/projects" className={`transition font-medium text-sm ${isActive('/projects')}`}>Gallery</Link>
+                            <Link to="/robotics" className={`transition font-medium text-sm ${isActive('/robotics')}`}>Robotics</Link>
+                            <Link to="/drones" className={`transition font-medium text-sm ${isActive('/drones')}`}>Drones</Link>
+                            <Link to="/about" className={`transition font-medium text-sm ${isActive('/about')}`}>About</Link>
+                            <Link to="/contact" className={`transition font-medium text-sm ${isActive('/contact')}`}>Contact</Link>
+                        </div>
                     </div>
 
-                    {/* ACTION BUTTONS */}
+                    {/* RIGHT SIDE: ACTION BUTTONS */}
                     <div className="hidden lg:flex items-center space-x-4">
                         {isLoggedIn ? (
                             <>
@@ -86,24 +89,31 @@ const Navbar = () => {
                         <div className="border-t border-gray-100 my-2 pt-2">
                             {isLoggedIn ? (
                                 <>
-                                    <div className="px-4 py-2 text-gray-500 text-sm">Signed in as <span className="font-bold">{user?.username}</span></div>
+                                    <div className="px-4 py-3 bg-gray-50 rounded-lg mb-2">
+                                        <div className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Signed in as</div>
+                                        <div className="text-gray-900 font-bold text-lg">{user?.username}</div>
+                                    </div>
                                     {user?.role === 'admin' && (
-                                        <Link to="/admin" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md">
+                                        <Link to="/admin" onClick={() => setIsOpen(false)} className="block px-4 py-3 text-white bg-gray-900 font-bold hover:bg-black rounded-lg text-center shadow-md mb-2">
                                             🛡️ Admin Panel
                                         </Link>
                                     )}
-                                    <Link to="/submit" onClick={() => setIsOpen(false)} className="block w-full text-left px-4 py-2 text-green-600 font-medium hover:bg-green-50 rounded-md">
+                                    <Link to="/submit" onClick={() => setIsOpen(false)} className="block w-full text-center px-4 py-3 bg-green-50 text-green-700 font-bold hover:bg-green-100 rounded-lg border border-green-200 mb-2">
                                         + Submit Idea
                                     </Link>
-                                    <button onClick={() => { logout(); setIsOpen(false); }} className="block w-full text-left px-4 py-2 text-red-600 font-medium hover:bg-red-50 rounded-md">
+                                    <button onClick={() => { logout(); setIsOpen(false); }} className="block w-full text-center px-4 py-3 bg-red-50 text-red-600 font-bold hover:bg-red-100 rounded-lg border border-red-200">
                                         Logout
                                     </button>
                                 </>
                             ) : (
-                                <>
-                                    <Link to="/login" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-gray-600 hover:text-indigo-600 rounded-md">Login</Link>
-                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-indigo-600 font-bold hover:bg-indigo-50 rounded-md">Register</Link>
-                                </>
+                                <div className="flex flex-col gap-3 mt-2">
+                                    <Link to="/login" onClick={() => setIsOpen(false)} className="block w-full text-center px-4 py-3 text-gray-700 font-bold bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200">
+                                        Login
+                                    </Link>
+                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="block w-full text-center px-4 py-3 bg-indigo-600 text-white font-bold hover:bg-indigo-700 rounded-lg shadow-md">
+                                        Get Started
+                                    </Link>
+                                </div>
                             )}
                         </div>
                     </div>

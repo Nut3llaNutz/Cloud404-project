@@ -48,7 +48,7 @@ const Signup = () => {
                     {['username', 'email', 'password', 'organization'].map((field) => (
                         <div key={field}>
                             <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">
-                                {field === 'organization' ? 'Organization / College' : field === 'contactNumber' ? 'Contact Number' : field}
+                                {field === 'organization' ? 'Organization / College' : field}
                             </label>
                             <input
                                 type={field === 'password' ? 'password' : 'text'}
@@ -56,7 +56,7 @@ const Signup = () => {
                                 required={field !== 'organization'}
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition outline-none"
-                                placeholder={field === 'username' ? 'johndoe' : field === 'email' ? 'john@example.com' : ''}
+                                placeholder={field === 'username' ? 'user' : field === 'email' ? 'user@example.com' : ''}
                             />
                         </div>
                     ))}

@@ -91,7 +91,7 @@ const RoboticsList = () => {
                                 <img
                                     src={project.projectImages[0]}
                                     alt={project.name}
-                                    className="w-full h-40 object-cover rounded-md mb-4"
+                                    className="w-full h-56 object-cover rounded-md mb-4"
                                 />
                             )}
                             <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.name}</h3>
@@ -100,7 +100,7 @@ const RoboticsList = () => {
                             </p>
                             <p className="text-gray-700 mt-2 h-16 overflow-hidden text-ellipsis">{project.description}</p>
 
-                            <Link to={`/robotics/${project._id}`} className="block mt-4 text-center text-indigo-500 font-semibold hover:underline">
+                            <Link to={`/robotics/${project._id}`} className="block mt-4 text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-2.5 rounded-lg shadow-md hover:shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:-translate-y-0.5">
                                 View Details →
                             </Link>
 

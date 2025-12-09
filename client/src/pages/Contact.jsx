@@ -33,27 +33,35 @@ const Contact = () => {
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row">
 
                 {/* Contact Info Side */}
-                <div className="bg-indigo-700 text-white p-10 md:w-1/2 flex flex-col justify-center">
-                    <h2 className="text-4xl font-extrabold mb-6">Get in Touch</h2>
-                    <p className="text-indigo-200 mb-8 text-lg">
-                        Have questions about the project? Want to collaborate?
-                        We'd love to hear from you.
-                    </p>
+                <div className="relative overflow-hidden rainbow-bg text-white p-6 md:p-10 md:w-1/2 flex flex-col justify-center">
+                    {/* Background Blobs for specific section */}
+                    <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+                        <div className="absolute -top-10 -left-10 w-48 h-48 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-blob"></div>
+                        <div className="absolute top-10 -right-10 w-48 h-48 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-blob animation-delay-2000"></div>
+                    </div>
 
-                    <div className="space-y-6">
-                        <div className="flex items-center space-x-4">
-                            <span className="text-2xl">📍</span>
-                            <p className="text-lg">Lovely Professional University, Punjab, India</p>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <span className="text-2xl">📧</span>
-                            <p className="text-lg">yuvrajbhardwaj2005yb@gmail.com</p>
+                    <div className="relative z-10">
+                        <h2 className="text-4xl font-extrabold mb-6">Get in Touch</h2>
+                        <p className="text-white/90 mb-8 text-lg">
+                            Have questions about the project? Want to collaborate?
+                            We'd love to hear from you.
+                        </p>
+
+                        <div className="space-y-6">
+                            <div className="flex items-center space-x-4">
+                                <span className="text-2xl">📍</span>
+                                <p className="text-lg">Lovely Professional University, Punjab, India</p>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                                <span className="text-2xl">📧</span>
+                                <p className="text-lg">yuvrajbhardwaj2005yb@gmail.com</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Feedback Form Side */}
-                <div className="p-10 md:w-1/2">
+                <div className="p-6 md:p-10 md:w-1/2">
                     <h2 className="text-3xl font-bold text-gray-800 mb-6">Send Us a Message</h2>
 
                     {status === 'success' && (
@@ -106,7 +114,7 @@ const Contact = () => {
                         <button
                             type="submit"
                             disabled={status === 'loading'}
-                            className="w-full bg-indigo-600 text-white font-bold py-3 rounded hover:bg-indigo-700 transition disabled:bg-gray-400"
+                            className="w-full rainbow-bg text-white font-bold py-3 rounded hover:opacity-90 transition disabled:bg-gray-400 shadow-lg transform hover:-translate-y-0.5"
                         >
                             {status === 'loading' ? 'Sending...' : 'Send Message'}
                         </button>

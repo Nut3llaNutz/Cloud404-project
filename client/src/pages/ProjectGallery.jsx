@@ -37,7 +37,19 @@ const ProjectGallery = () => {
                 headers: { 'x-auth-token': token }
             });
             const updatedProject = res.data.project;
-            setProjects(projects.map(p => p._id === projectId ? updatedProject : p));
+
+            // Fix for "Anonymous" bug: server might send back owner as ID string instead of object
+            // We manually preserve the existing owner details from the current state
+            setProjects(prevProjects => prevProjects.map(p => {
+                if (p._id === projectId) {
+                    return {
+                        ...updatedProject,
+                        owner: typeof updatedProject.owner === 'string' ? p.owner : updatedProject.owner
+                    };
+                }
+                return p;
+            }));
+
         } catch (error) {
             console.error("Error toggling like:", error);
             alert(`Could not process like: ${error.response?.data?.message || 'Server connection error.'}`);
@@ -83,7 +95,7 @@ const ProjectGallery = () => {
                     </svg>
                 </div>
 
-                <div className="flex overflow-x-auto pb-2 md:pb-0 w-full md:w-auto gap-2 thin-scrollbar">
+                <div className="flex overflow-x-auto pb-4 md:pb-2 w-full md:w-auto gap-2 thin-scrollbar">
                     {categories.map(cat => (
                         <button
                             key={cat}
@@ -125,7 +137,7 @@ const ProjectGallery = () => {
                         return (
                             <div key={project._id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full">
                                 {/* Image */}
-                                <div className="relative h-48 overflow-hidden bg-gray-200">
+                                <div className="relative h-64 overflow-hidden bg-gray-200">
                                     {project.projectImages && project.projectImages[0] ? (
                                         <img
                                             src={project.projectImages[0]}
@@ -173,7 +185,7 @@ const ProjectGallery = () => {
                                                 but we can keep it simple. */}
                                         </div>
 
-                                        <Link to={`/projects/${project._id}`} className="block mt-4 text-center text-indigo-500 font-semibold hover:underline bg-indigo-50 py-2 rounded-lg transition hover:bg-indigo-100">
+                                        <Link to={`/projects/${project._id}`} className="block mt-4 text-center text-indigo-500 font-semibold bg-indigo-50 py-2 rounded-lg transition hover:bg-indigo-100">
                                             View Innovation Details →
                                         </Link>
                                     </div>
