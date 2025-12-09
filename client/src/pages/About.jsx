@@ -27,23 +27,16 @@ const About = () => {
                 </section>
 
                 <section>
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">Meet the Team</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="text-center p-4 border rounded-xl hover:shadow-lg transition">
-                            <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-3"></div>
-                            <h3 className="text-xl font-bold text-gray-900">Person 1</h3>
-                            <p className="text-indigo-500 font-medium">Frontend Lead</p>
-                        </div>
-                        <div className="text-center p-4 border rounded-xl hover:shadow-lg transition">
-                            <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-3"></div>
-                            <h3 className="text-xl font-bold text-gray-900">Person 2</h3>
-                            <p className="text-indigo-500 font-medium">Robotics Specialist</p>
-                        </div>
-                        <div className="text-center p-4 border rounded-xl hover:shadow-lg transition">
-                            <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-3"></div>
-                            <h3 className="text-xl font-bold text-gray-900">Person 3</h3>
-                            <p className="text-indigo-500 font-medium">Auth & Drones</p>
-                        </div>
+                    <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Meet the Team</h2>
+                    <div className="flex flex-wrap justify-center gap-10">
+                        {['YUVRAJ', 'AKHILA', 'ADNAN'].map((name, index) => (
+                            <div key={index} className="text-center group">
+                                <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-3xl font-bold shadow-lg transform group-hover:scale-110 transition duration-300">
+                                    {name.charAt(0)}
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-900 tracking-wide">{name}</h3>
+                            </div>
+                        ))}
                     </div>
                 </section>
             </div>

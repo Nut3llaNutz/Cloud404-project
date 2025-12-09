@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import projectLogo from '../project-logo.png';
 
 const Footer = () => {
     return (
@@ -8,8 +9,8 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     {/* Brand */}
                     <div className="col-span-1 md:col-span-2">
-                        <Link to="/" className="text-2xl font-extrabold text-white tracking-wide">
-                            🇮🇳 Swadeshi<span className="text-orange-500">Hub</span>
+                        <Link to="/" className="inline-block hover:scale-105 transition duration-300">
+                            <img src={projectLogo} alt="SwadeshiHub Logo" className="h-25 w-auto bg-white rounded-full p-2" />
                         </Link>
                         <p className="mt-4 text-gray-400 max-w-sm">
                             Empowering India's innovators to build the future. A central registry for Robotics, Drones, and cutting-edge technology projects.
@@ -43,9 +44,7 @@ const Footer = () => {
                         © {new Date().getFullYear()} Swadeshi Innovation Hub. Built for Atmanirbhar Bharat.
                     </p>
                     <div className="flex space-x-4 mt-4 md:mt-0">
-                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-twitter"></i> Twitter</a>
-                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-github"></i> GitHub</a>
-                        <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://www.lpu.in" className="text-gray-400 hover:text-white transition"><i className="fab fa-linkedin"></i>Made By LPU Students 🥜</a>
                     </div>
                 </div>
             </div>

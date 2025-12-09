@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext'; // Import our custom hook
+import { API_BASE_URL } from '../config';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -19,9 +20,8 @@ const Login = () => {
         setMessage('Logging in...');
 
         try {
-            // IMPORTANT: Replace this base URL with your Render API base URL
-            const BASE_URL = 'https://cloud404-project.onrender.com';
-            const res = await axios.post(`${BASE_URL}/api/auth/login`, formData);
+            // Use the centralized API_BASE_URL (points to localhost:5000/api locally)
+            const res = await axios.post(`${API_BASE_URL}/auth/login`, formData);
 
             // Success: Use the context function to store token and user data
             login(res.data.token, res.data.user);

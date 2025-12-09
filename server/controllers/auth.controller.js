@@ -1,11 +1,13 @@
 // server/controllers/auth.controller.js
-const User = require('../models/User.model');
+const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // --- SIGNUP (Creates a new User) ---
+// server/controllers/auth.controller.js
 exports.signup = async (req, res) => {
-    const { username, email, password, organization } = req.body;
+    console.log("DEBUG: Signup Body:", req.body); // DEBUG LOG
+    const { username, email, password, organization, contactNumber } = req.body;
 
     if (!username || !email || !password) {
         return res.status(400).json({ message: "Please enter all required fields: username, email, and password." });
@@ -28,15 +30,22 @@ exports.signup = async (req, res) => {
             username,
             email,
             password: hashedPassword, // Store the HASHED password
-            organization: organization || 'N/A'
+            organization: organization || 'N/A',
+            contactNumber: contactNumber || 'N/A'
         });
 
         await user.save();
 
         // 4. Respond with success (Do not send password back)
-        res.status(201).json({ 
-            message: "User registered successfully!", 
-            user: { id: user._id, username: user.username, email: user.email }
+        res.status(201).json({
+            message: "User registered successfully!",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                organization: user.organization,
+                contactNumber: user.contactNumber
+            }
         });
 
     } catch (err) {
@@ -52,6 +61,7 @@ exports.login = async (req, res) => {
     try {
         // 1. Check if user exists
         const user = await User.findOne({ email });
+        console.log("DEBUG: Login User Found:", user); // DEBUG LOG
         if (!user) {
             return res.status(400).json({ message: "Invalid Credentials (User not found)" });
         }
@@ -77,7 +87,17 @@ exports.login = async (req, res) => {
             { expiresIn: '1d' }, // Token expires in 1 day
             (err, token) => {
                 if (err) throw err;
-                res.json({ token, user: { id: user._id, username: user.username, email: user.email, role: user.role } });
+                res.json({
+                    token,
+                    user: {
+                        id: user._id,
+                        username: user.username,
+                        email: user.email,
+                        role: user.role,
+                        organization: user.organization,
+                        contactNumber: user.contactNumber
+                    }
+                });
             }
         );
     } catch (err) {

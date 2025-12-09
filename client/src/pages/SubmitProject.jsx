@@ -11,8 +11,8 @@ const SubmitProject = () => {
 
     // Redirect if not logged in (basic client-side protection)
     if (!isLoggedIn) {
-         // You can use useEffect here or just a simple check, but let's keep it simple:
-         return <div className="text-center p-16 text-xl">Please <Link to="/login" className="text-indigo-600">login</Link> to submit a project.</div>;
+        // You can use useEffect here or just a simple check, but let's keep it simple:
+        return <div className="text-center p-16 text-xl">Please <Link to="/login" className="text-indigo-600">login</Link> to submit a project.</div>;
     }
 
     const [formData, setFormData] = useState({
@@ -20,6 +20,8 @@ const SubmitProject = () => {
         category: 'Agriculture',
         teamMembers: '', // Will be split by comma
         description: '',
+        contactEmail: '',
+        contactNumber: ''
     });
     const [status, setStatus] = useState('');
     const navigate = useNavigate();
@@ -34,17 +36,19 @@ const SubmitProject = () => {
 
         // Prepare data: Split team members string into an array
         const payload = {
-        name: formData.name,
-        category: formData.category,
-        teamMembers: formData.teamMembers.split(',').map(s => s.trim()),
-        description: formData.description,
-        // CRITICAL CORRECTION: Send the image URL as an array
-        projectImages: formData.imageUrl ? [formData.imageUrl] : [], 
+            name: formData.name,
+            category: formData.category,
+            teamMembers: formData.teamMembers.split(',').map(s => s.trim()),
+            description: formData.description,
+            contactEmail: formData.contactEmail,
+            contactNumber: formData.contactNumber,
+            // CRITICAL CORRECTION: Send the image URL as an array
+            projectImages: formData.imageUrl ? [formData.imageUrl] : [],
         };
 
         // --- Data Submission (CREATE) ---
         try {
-            await axios.post(API_BASE_URL, payload, {
+            await axios.post(`${API_BASE_URL}/projects`, payload, {
                 headers: {
                     'x-auth-token': token // <-- send the jwt token in the request headers
                 }
@@ -73,11 +77,11 @@ const SubmitProject = () => {
                 {/* Project Name Field */}
                 <label className="block mb-4">
                     <span className="text-gray-700 font-medium">Project Name</span>
-                    <input 
-                        type="text" 
-                        name="name" 
-                        required 
-                        onChange={handleChange} 
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        onChange={handleChange}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
                 </label>
@@ -85,10 +89,10 @@ const SubmitProject = () => {
                 {/* Category Field */}
                 <label className="block mb-4">
                     <span className="text-gray-700 font-medium">Category</span>
-                    <select 
-                        name="category" 
-                        required 
-                        onChange={handleChange} 
+                    <select
+                        name="category"
+                        required
+                        onChange={handleChange}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     >
                         <option>Agriculture</option>
@@ -102,11 +106,37 @@ const SubmitProject = () => {
                 {/* Team Members Field */}
                 <label className="block mb-4">
                     <span className="text-gray-700 font-medium">Team Members (Comma Separated, e.g., P1, P2, P3)</span>
-                    <input 
-                        type="text" 
-                        name="teamMembers" 
-                        required 
-                        onChange={handleChange} 
+                    <input
+                        type="text"
+                        name="teamMembers"
+                        required
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
+                    />
+                </label>
+
+
+
+                {/* Contact Email Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Email</span>
+                    <input
+                        type="email"
+                        name="contactEmail"
+                        required
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
+                    />
+                </label>
+
+                {/* Contact Number Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Number</span>
+                    <input
+                        type="tel"
+                        name="contactNumber"
+                        required
+                        onChange={handleChange}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
                 </label>
@@ -114,35 +144,35 @@ const SubmitProject = () => {
                 {/* Description Field */}
                 <label className="block mb-6">
                     <span className="text-gray-700 font-medium">Description</span>
-                    <textarea 
-                        name="description" 
-                        required 
-                        rows="4" 
-                        onChange={handleChange} 
+                    <textarea
+                        name="description"
+                        required
+                        rows="4"
+                        onChange={handleChange}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     ></textarea>
                 </label>
 
                 <label className="block mb-4">
                     <span className="text-gray-700">Project Image URL (Optional)</span>
-                    <input 
-                        type="url" 
-                        name="imageUrl" 
+                    <input
+                        type="url"
+                        name="imageUrl"
                         placeholder="Link to your project's main image"
-                        onChange={handleChange} 
+                        onChange={handleChange}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
                     />
                 </label>
 
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     className="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition"
                     disabled={status === 'Submitting...'}
                 >
                     Submit Innovation
                 </button>
             </form>
-        </div>
+        </div >
     );
 };
 

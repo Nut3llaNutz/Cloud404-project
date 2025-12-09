@@ -29,7 +29,7 @@ exports.getRoboticsById = async (req, res) => {
 // Create a new Robotics project
 exports.createRobotics = async (req, res) => {
     try {
-        const { name, teamMembers, description, projectImages } = req.body;
+        const { name, teamMembers, description, projectImages, contactEmail, contactNumber } = req.body;
 
         const newProject = new Project({
             name,
@@ -37,6 +37,8 @@ exports.createRobotics = async (req, res) => {
             teamMembers,
             description,
             projectImages,
+            contactEmail,
+            contactNumber,
             owner: req.user.id // From auth middleware
         });
 

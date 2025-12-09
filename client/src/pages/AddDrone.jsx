@@ -12,7 +12,9 @@ const AddDrone = () => {
         name: '',
         description: '',
         teamMembers: '',
-        imageUrl: ''
+        imageUrl: '',
+        contactEmail: '',
+        contactNumber: ''
     });
 
     const handleChange = (e) => {
@@ -30,7 +32,9 @@ const AddDrone = () => {
                 name: formData.name,
                 description: formData.description,
                 teamMembers: teamMembersArray,
-                projectImages: projectImagesArray
+                projectImages: projectImagesArray,
+                contactEmail: formData.contactEmail,
+                contactNumber: formData.contactNumber
             }, {
                 headers: { 'x-auth-token': token }
             });
@@ -79,6 +83,30 @@ const AddDrone = () => {
                         value={formData.teamMembers}
                         onChange={handleChange}
                         placeholder="Alice, Bob, Charlie"
+                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-gray-700 font-bold mb-2">Contact Email</label>
+                    <input
+                        type="email"
+                        name="contactEmail"
+                        value={formData.contactEmail}
+                        onChange={handleChange}
+                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-gray-700 font-bold mb-2">Contact Number</label>
+                    <input
+                        type="tel"
+                        name="contactNumber"
+                        value={formData.contactNumber}
+                        onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                         required
                     />

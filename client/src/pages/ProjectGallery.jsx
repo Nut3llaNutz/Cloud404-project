@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { useUser } from '../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const ProjectGallery = () => {
     const [projects, setProjects] = useState([]);
@@ -168,19 +169,22 @@ const ProjectGallery = () => {
                                                 <span>{project.likes}</span>
                                             </button>
 
-                                            {/* Could add a view details link here if we had a generic details page, 
-                                                for now robotics/drones have logic to separate. 
-                                                Generic projects don't have a dedicated details page in the original plan, 
+                                            {/* Generic projects don't have a dedicated details page in the original plan, 
                                                 but we can keep it simple. */}
                                         </div>
+
+                                        <Link to={`/projects/${project._id}`} className="block mt-4 text-center text-indigo-500 font-semibold hover:underline bg-indigo-50 py-2 rounded-lg transition hover:bg-indigo-100">
+                                            View Innovation Details →
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 

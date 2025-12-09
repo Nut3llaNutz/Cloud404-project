@@ -43,15 +43,11 @@ const Contact = () => {
                     <div className="space-y-6">
                         <div className="flex items-center space-x-4">
                             <span className="text-2xl">📍</span>
-                            <p className="text-lg">123 Innovation Drive, Tech City, India</p>
+                            <p className="text-lg">Lovely Professional University, Punjab, India</p>
                         </div>
                         <div className="flex items-center space-x-4">
                             <span className="text-2xl">📧</span>
-                            <p className="text-lg">contact@swadeshihub.in</p>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <span className="text-2xl">📞</span>
-                            <p className="text-lg">+91 98765 43210</p>
+                            <p className="text-lg">yuvrajbhardwaj2005yb@gmail.com</p>
                         </div>
                     </div>
                 </div>

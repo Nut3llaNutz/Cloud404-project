@@ -51,11 +51,11 @@ exports.createProject = async (req, res) => {
     const ownerId = req.user.id;
 
     // req.body contains the data sent from the React form (thanks to express.json middleware)
-    const { name, category, teamMembers, description, projectImages } = req.body;
+    const { name, category, teamMembers, description, projectImages, contactEmail, contactNumber } = req.body;
 
     // --- Basic Server-side Validation ---
-    if (!name || !teamMembers || !description) {
-        return res.status(400).json({ message: 'Missing required fields: Name, Team Members, and Description are mandatory.' });
+    if (!name || !teamMembers || !description || !contactEmail || !contactNumber) {
+        return res.status(400).json({ message: 'Missing required fields: Name, Team, Description, Email, and Phone are mandatory.' });
     }
 
     // Default status is 'pending' and isFeatured is false (defined in model usually, but good to be explicit/safe)
@@ -66,6 +66,8 @@ exports.createProject = async (req, res) => {
         description,
         owner: ownerId,
         projectImages: projectImages || [],
+        contactEmail,
+        contactNumber,
         status: 'pending',
         isFeatured: false
     });
@@ -99,6 +101,7 @@ exports.deleteProject = async (req, res) => {
 };
 
 exports.likeProject = async (req, res) => {
+    console.log("DEBUG: Like Project Request Received:", req.params.id, "User:", req.user.id); // DEBUG LOG
     const userId = req.user.id;
     const projectId = req.params.id;
 
@@ -107,6 +110,10 @@ exports.likeProject = async (req, res) => {
 
         if (!project) {
             return res.status(404).json({ message: 'Project not found.' });
+        }
+
+        if (!project.likedBy) {
+            project.likedBy = [];
         }
 
         const alreadyLiked = project.likedBy.includes(userId);

@@ -36,14 +36,23 @@ const projectSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    contactEmail: {
+        type: String,
+        required: true
+    },
+    contactNumber: {
+        type: String,
+        required: true
+    },
     likes: {
         type: Number,
         default: 0
     },
-    likedBy: { // New field: Array to store User IDs who have liked
+    likedBy: [{ // New field: Array to store User IDs who have liked
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+        ref: 'User',
+        default: []
+    }],
     status: { // For Admin Review
         type: String,
         enum: ['pending', 'approved', 'rejected'],

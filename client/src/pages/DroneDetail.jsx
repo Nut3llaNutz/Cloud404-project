@@ -78,7 +78,10 @@ const DroneDetail = () => {
                         <span className="font-semibold">Organization:</span> {project.owner?.organization || 'N/A'}
                     </p>
                     <p className="text-gray-700">
-                        <span className="font-semibold">Email:</span> {project.owner?.contactEmail || 'N/A'}
+                        <span className="font-semibold">Email:</span> {project.contactEmail || 'N/A'}
+                    </p>
+                    <p className="text-gray-700">
+                        <span className="font-semibold">Phone:</span> {project.contactNumber || 'N/A'}
                     </p>
                 </div>
             </div>

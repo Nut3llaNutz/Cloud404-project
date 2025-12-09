@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import projectLogo from '../project-logo.png';
 
 const Navbar = () => {
     const { isLoggedIn, user, logout } = useUser();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const isActive = (path) => location.pathname === path ? 'text-indigo-600 font-bold' : 'text-gray-600 hover:text-indigo-600';
 
@@ -15,12 +17,12 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-20">
 
                     {/* LOGO */}
-                    <Link to="/" className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 tracking-wide hover:scale-105 transition duration-300">
-                        🇮🇳 Swadeshi<span className="text-orange-500">Hub</span>
+                    <Link to="/" className="flex items-center hover:scale-105 transition duration-300">
+                        <img src={projectLogo} alt="SwadeshiHub Logo" className="h-20 w-auto" />
                     </Link>
 
                     {/* DESKTOP MENU */}
-                    <div className="hidden lg:flex space-x-8 items-center bg-gray-50 px-8 py-2 rounded-full border border-gray-100 shadow-inner">
+                    <div className="hidden lg:flex space-x-8 items-center bg-gray-100 px-8 py-2 rounded-full border border-gray-100 shadow-inner">
                         <Link to="/projects" className={`transition font-medium text-sm ${isActive('/projects')}`}>Gallery</Link>
                         <Link to="/robotics" className={`transition font-medium text-sm ${isActive('/robotics')}`}>Robotics</Link>
                         <Link to="/drones" className={`transition font-medium text-sm ${isActive('/drones')}`}>Drones</Link>
@@ -43,7 +45,7 @@ const Navbar = () => {
                                     </div>
                                     <span className="text-sm font-semibold">{user?.username}</span>
                                 </Link>
-                                <button onClick={() => { logout(); setIsOpen(false); }} className="px-4 py-2 border border-red-200 text-red-500 rounded-full hover:bg-red-50 transition text-sm font-semibold">
+                                <button onClick={() => { logout(); setIsOpen(false); navigate('/'); }} className="px-4 py-2 border border-red-200 text-red-500 rounded-full hover:bg-red-50 transition text-sm font-semibold">
                                     Logout
                                 </button>
                             </>

@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ProjectGallery from './pages/ProjectGallery';
+import ProjectDetail from './pages/ProjectDetail'; // Import the new details page
 import SubmitProject from './pages/SubmitProject';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/projects" element={<ProjectGallery />} />
+                    <Route path="/projects/:id" element={<ProjectDetail />} /> {/* New Route */}
                     <Route path="/submit" element={<SubmitProject />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />

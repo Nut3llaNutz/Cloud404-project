@@ -20,7 +20,7 @@ const Dashboard = () => {
             try {
                 const [roboticsRes, projectsRes] = await Promise.all([
                     axios.get(`${API_BASE_URL}/robotics`),
-                    axios.get(`${API_BASE_URL}`)
+                    axios.get(`${API_BASE_URL}/projects`) // Fixed URL
                 ]);
 
                 const allRobotics = roboticsRes.data;
@@ -64,6 +64,7 @@ const Dashboard = () => {
                 <h2 className="text-2xl font-bold text-gray-800">My Submissions ({myProjects.length})</h2>
                 <div className="space-x-4">
                     <Link to="/add-robotics" className="text-indigo-600 hover:text-indigo-800 font-semibold">+ New Robot</Link>
+                    <Link to="/add-drone" className="text-sky-600 hover:text-sky-800 font-semibold">+ New Drone</Link>
                     <Link to="/submit" className="text-green-600 hover:text-green-800 font-semibold">+ New Project</Link>
                 </div>
             </div>

@@ -18,7 +18,7 @@ const Signup = () => {
 
         try {
             // IMPORTANT: Replace this base URL with your Render API base URL (e.g., https://cloud404-api.onrender.com)
-            const BASE_URL = 'https://cloud404-project.onrender.com';
+            const BASE_URL = 'http://localhost:5000'; // Updated to local dev url for consistency
             const res = await axios.post(`${BASE_URL}/api/auth/signup`, formData);
 
             setMessage(`SUCCESS: ${res.data.message}. Redirecting to login...`);
@@ -48,7 +48,7 @@ const Signup = () => {
                     {['username', 'email', 'password', 'organization'].map((field) => (
                         <div key={field}>
                             <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">
-                                {field === 'organization' ? 'Organization / College' : field}
+                                {field === 'organization' ? 'Organization / College' : field === 'contactNumber' ? 'Contact Number' : field}
                             </label>
                             <input
                                 type={field === 'password' ? 'password' : 'text'}
