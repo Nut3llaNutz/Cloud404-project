@@ -49,85 +49,94 @@ const AddRobotics = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 max-w-2xl bg-white shadow-xl rounded-xl mt-10">
-            <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-4">🚀 Submit New Robotics Project</h2>
+        <div className="container mx-auto p-8">
+            <h2 className="text-4xl font-extrabold text-indigo-700 mb-8">🚀 Submit New Robotics Project</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Project Name</label>
+            <form onSubmit={handleSubmit} className="max-w-xl bg-white p-8 rounded-xl shadow-3xl">
+                {/* Project Name Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Project Name</span>
                     <input
                         type="text"
                         name="name"
+                        required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Description</label>
+                {/* Description Field */}
+                <label className="block mb-6">
+                    <span className="text-gray-700 font-medium">Description</span>
                     <textarea
                         name="description"
+                        required
+                        rows="4"
                         value={formData.description}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 h-32"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     ></textarea>
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Team Members (comma separated)</label>
+                {/* Team Members Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Team Members (Comma Separated)</span>
                     <input
                         type="text"
                         name="teamMembers"
+                        required
                         value={formData.teamMembers}
                         onChange={handleChange}
                         placeholder="P1, P2, P3"
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Contact Email</label>
+                {/* Contact Email Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Email</span>
                     <input
                         type="email"
                         name="contactEmail"
+                        required
                         value={formData.contactEmail}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Contact Number</label>
+                {/* Contact Number Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Number</span>
                     <input
                         type="tel"
                         name="contactNumber"
+                        required
                         value={formData.contactNumber}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Image URL (Optional)</label>
+                {/* Image URL Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 flex items-center gap-2">
+                        Project Image URL <span className="text-gray-400 text-sm">(Optional)</span>
+                    </span>
                     <input
                         type="text"
                         name="imageUrl"
                         value={formData.imageUrl}
                         onChange={handleChange}
                         placeholder="https://example.com/robot.jpg"
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
                 <button
                     type="submit"
-                    className="w-full bg-indigo-600 text-white font-bold py-3 rounded hover:bg-indigo-700 transition"
+                    className="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition"
                 >
                     Submit Project
                 </button>

@@ -90,28 +90,28 @@ const DroneList = () => {
                                     className="w-full h-56 object-cover rounded-md mb-4"
                                 />
                             )}
-                            <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.name}</h3>
-                            <p className="text-sm font-semibold mb-3 text-sky-600">
-                                Team: {project.teamMembers.join(', ')}
-                            </p>
-                            <p className="text-gray-700 mt-2 h-16 overflow-hidden text-ellipsis">{project.description}</p>
-
-                            <Link to={`/drones/${project._id}`} className="block mt-4 text-center bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold py-2.5 rounded-lg shadow-md hover:shadow-lg hover:from-sky-600 hover:to-blue-700 transition-all transform hover:-translate-y-0.5">
-                                View Flight Data →
-                            </Link>
-
-                            <div className="mt-4 flex justify-between items-center border-t border-gray-100 pt-3">
-                                <span className="text-gray-500 text-sm">👍 {project.likes || 0} Likes</span>
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-2xl font-bold text-gray-900 line-clamp-1 flex-1 pr-2">{project.name}</h3>
                                 <button
                                     onClick={() => handleLike(project._id)}
-                                    className={`px-3 py-1 rounded-full text-sm font-bold transition duration-200 ${project.likedBy?.includes(user?.id)
+                                    className={`px-4 py-2 rounded-full text-sm font-bold transition duration-200 whitespace-nowrap shadow-sm ${project.likedBy?.includes(user?.id)
                                         ? 'bg-red-50 text-red-500 hover:bg-red-100'
                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
-                                    {project.likedBy?.includes(user?.id) ? '❤️ Liked' : '🤍 Like'}
+                                    <span className="text-lg mr-1">{project.likedBy?.includes(user?.id) ? '❤️' : '🤍'}</span>
+                                    {project.likes || 0}
                                 </button>
                             </div>
+                            <p className="text-sm font-semibold mb-3 text-sky-600">
+                                Team: {project.teamMembers.join(', ')}
+                            </p>
+
+                            {/* Description Removed */}
+
+                            <Link to={`/drones/${project._id}`} className="block mt-4 text-center bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold py-2.5 rounded-lg shadow-md hover:shadow-lg hover:from-sky-600 hover:to-blue-700 transition-all transform hover:-translate-y-0.5">
+                                View Details →
+                            </Link>
                         </div>
                     ))}
                 </div>

@@ -29,7 +29,7 @@ const Contact = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="container mx-auto p-4 md:p-8 bg-gray-50 min-h-screen flex items-center justify-center">
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row">
 
                 {/* Contact Info Side */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
@@ -7,6 +8,17 @@ const HomePage = () => {
     const [stats, setStats] = useState({ total: 0, robotics: 0, drones: 0, innovators: 0 });
     const [featuredProjects, setFeaturedProjects] = useState([]); // [NEW] State for featured projects
     const [currentIndex, setCurrentIndex] = useState(0);
+    const { isLoggedIn } = useUser();
+    const navigate = useNavigate();
+
+    const handleSubmitProject = () => {
+        if (!isLoggedIn) {
+            alert("To submit a project, please join our community of innovators! Login or Sign up to proceed.");
+            navigate('/login');
+        } else {
+            navigate('/submit');
+        }
+    };
 
     // Auto-play Carousel
     useEffect(() => {
@@ -62,9 +74,9 @@ const HomePage = () => {
                     </p>
 
                     <div className="flex flex-col md:flex-row justify-center gap-4">
-                        <Link to="/submit" className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-indigo-500/50 transition transform hover:-translate-y-1">
+                        <button onClick={handleSubmitProject} className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-indigo-500/50 transition transform hover:-translate-y-1">
                             Submit Your Project
-                        </Link>
+                        </button>
                         <Link to="/projects" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-full font-bold text-lg transition">
                             Explore Gallery
                         </Link>

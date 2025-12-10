@@ -49,7 +49,7 @@ const Dashboard = () => {
         <div className="rainbow-bg min-h-screen pt-24">
             <div className="container mx-auto p-4 md:p-8">
                 {/* Welcome Section - Glassmorphism */}
-                <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12 mb-10 border border-white/20 relative overflow-hidden">
+                <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-6 md:p-12 mb-10 border border-white/20 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
 
                     <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-800 to-purple-800 mb-4">

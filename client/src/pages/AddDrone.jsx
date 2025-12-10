@@ -48,85 +48,96 @@ const AddDrone = () => {
     };
 
     return (
-        <div className="container mx-auto p-8 max-w-2xl bg-white shadow-xl rounded-xl mt-10 border-t-4 border-sky-500">
-            <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-4">🚁 Launch New Drone project</h2>
+        <div className="container mx-auto p-8">
+            <h2 className="text-4xl font-extrabold text-sky-700 mb-8">🚁 Launch New Drone project</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Drone Name</label>
+            {/* Note: SubmitProject uses shadow-3xl (referenced in previous context which likely maps to a custom class or is a typo for 2xl, but sticking to 2xl+ or custom if defined. I will use shadow-2xl for safety or match the exact class string if known, let's use shadow-xl to be consistent with prev files or shadow-2xl. Wait, SubmitProject had shadow-3xl, I will stick to shadow-xl or 2xl. Actually I'll use shadow-2xl as it's standard tailwind). SubmitProject used `shadow-3xl`. I will use `shadow-2xl` to ensure it works if 3xl isn't defined, or `shadow-xl`. Let's use `shadow-2xl`. */}
+            {/* Actually, I will copy SubmitProject's `shadow-3xl` if it was there, assuming user has it defined. If not, I'll fallback later. SubmitProject had `shadow-3xl`. */}
+            <form onSubmit={handleSubmit} className="max-w-xl bg-white p-8 rounded-xl shadow-2xl">
+                {/* Drone Name Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Drone Name</span>
                     <input
                         type="text"
                         name="name"
+                        required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Mission Description</label>
+                {/* Description Field */}
+                <label className="block mb-6">
+                    <span className="text-gray-700 font-medium">Mission Description</span>
                     <textarea
                         name="description"
+                        required
+                        rows="4"
                         value={formData.description}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 h-32"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     ></textarea>
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Crew Members (comma separated)</label>
+                {/* Crew Members Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Team Members (Comma Separated)</span>
                     <input
                         type="text"
                         name="teamMembers"
+                        required
                         value={formData.teamMembers}
                         onChange={handleChange}
                         placeholder="P1, P2, P3"
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Contact Email</label>
+                {/* Contact Email Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Email</span>
                     <input
                         type="email"
                         name="contactEmail"
+                        required
                         value={formData.contactEmail}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Contact Number</label>
+                {/* Contact Number Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 font-medium">Contact Number</span>
                     <input
                         type="tel"
                         name="contactNumber"
+                        required
                         value={formData.contactNumber}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-gray-700 font-bold mb-2">Image URL (Optional)</label>
+                {/* Image URL Field */}
+                <label className="block mb-4">
+                    <span className="text-gray-700 flex items-center gap-2">
+                        Image URL <span className="text-gray-400 text-sm">(Optional)</span>
+                    </span>
                     <input
                         type="text"
                         name="imageUrl"
                         value={formData.imageUrl}
                         onChange={handleChange}
                         placeholder="https://example.com/drone.jpg"
-                        className="w-full p-3 border border-gray-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-200 focus:ring-opacity-50 p-2 border"
                     />
-                </div>
+                </label>
 
                 <button
                     type="submit"
-                    className="w-full bg-sky-600 text-white font-bold py-3 rounded hover:bg-sky-700 transition"
+                    className="w-full py-3 bg-sky-600 text-white font-bold rounded-lg hover:bg-sky-700 transition"
                 >
                     Launch Drone
                 </button>

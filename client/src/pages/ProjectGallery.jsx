@@ -154,10 +154,21 @@ const ProjectGallery = () => {
 
                                 {/* Content */}
                                 <div className="p-6 flex-grow flex flex-col">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{project.name}</h3>
-                                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">{project.description}</p>
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="text-xl font-bold text-gray-900 line-clamp-1 flex-1 pr-2">{project.name}</h3>
+                                        <button
+                                            onClick={() => handleLike(project._id)}
+                                            className={`flex items-center space-x-1 px-4 py-2 rounded-full transition text-sm font-bold whitespace-nowrap shadow-sm ${isCurrentUserLiked
+                                                ? 'bg-red-50 text-red-500'
+                                                : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
+                                                }`}
+                                        >
+                                            <span className="text-lg">{isCurrentUserLiked ? '❤️' : '🤍'}</span>
+                                            <span>{project.likes}</span>
+                                        </button>
+                                    </div>
 
-                                    <div className="border-t pt-4 mt-auto">
+                                    <div className="mt-auto">
                                         <div className="flex justify-between items-center mb-3">
                                             <div className="flex items-center space-x-2">
                                                 <div className="text-xs font-medium bg-gray-100 text-gray-700 px-2 py-1 rounded">
@@ -167,22 +178,6 @@ const ProjectGallery = () => {
                                             <span className="text-xs text-gray-400">
                                                 {new Date(project.dateSubmitted).toLocaleDateString()}
                                             </span>
-                                        </div>
-
-                                        <div className="flex justify-between items-center">
-                                            <button
-                                                onClick={() => handleLike(project._id)}
-                                                className={`flex items-center space-x-1 px-3 py-1.5 rounded-full transition text-sm font-medium ${isCurrentUserLiked
-                                                    ? 'bg-red-50 text-red-500'
-                                                    : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
-                                                    }`}
-                                            >
-                                                <span>{isCurrentUserLiked ? '❤️' : '🤍'}</span>
-                                                <span>{project.likes}</span>
-                                            </button>
-
-                                            {/* Generic projects don't have a dedicated details page in the original plan, 
-                                                but we can keep it simple. */}
                                         </div>
 
                                         <Link to={`/projects/${project._id}`} className="block mt-4 text-center text-indigo-500 font-semibold bg-indigo-50 py-2 rounded-lg transition hover:bg-indigo-100">

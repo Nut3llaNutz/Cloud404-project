@@ -98,6 +98,9 @@ const Navbar = () => {
                                             🛡️ Admin Panel
                                         </Link>
                                     )}
+                                    <Link to="/dashboard" onClick={() => setIsOpen(false)} className="block px-4 py-3 bg-indigo-50 text-indigo-700 font-bold hover:bg-indigo-100 rounded-lg text-center border border-indigo-200 mb-2">
+                                        👤 My Dashboard
+                                    </Link>
                                     <Link to="/submit" onClick={() => setIsOpen(false)} className="block w-full text-center px-4 py-3 bg-green-50 text-green-700 font-bold hover:bg-green-100 rounded-lg border border-green-200 mb-2">
                                         + Submit Idea
                                     </Link>

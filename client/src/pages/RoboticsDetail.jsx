@@ -44,18 +44,19 @@ const RoboticsDetail = () => {
     const isOwner = user && project.owner && user.id === project.owner._id;
 
     return (
-        <div className="rainbow-bg min-h-screen pt-24">
-            <div className="container mx-auto p-8">
-                <div className="bg-white shadow-2xl rounded-2xl max-w-4xl mx-auto p-8 relative">
+        <div className="rainbow-bg min-h-screen pt-24 pb-12 flex items-center justify-center">
+            <div className="container mx-auto p-4 md:p-8 max-w-5xl">
+                <div className="bg-white/90 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-3xl p-6 md:p-10 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
                     <Link to="/robotics" className="inline-flex items-center text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-4 py-2 rounded-full mb-6 font-semibold transition-all hover:shadow-sm">
                         ← Back to Robotics
                     </Link>
 
-                    <h1 className="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4">{project.name}</h1>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4">{project.name}</h1>
 
                     {project.projectImages && project.projectImages.length > 0 && (
                         <div className="mb-8 overflow-hidden rounded-xl shadow-md">
-                            <img src={project.projectImages[0]} alt={project.name} className="w-full h-[32rem] object-cover hover:scale-105 transition duration-500" />
+                            <img src={project.projectImages[0]} alt={project.name} className="w-full h-64 md:h-[32rem] object-cover hover:scale-105 transition duration-500" />
                         </div>
                     )}
 
