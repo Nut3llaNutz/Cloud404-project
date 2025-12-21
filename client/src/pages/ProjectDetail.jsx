@@ -55,7 +55,7 @@ const ProjectDetail = () => {
     const isOwner = user && project.owner && (user.id === project.owner._id || user.id === project.owner);
 
     return (
-        <div className="rainbow-bg min-h-screen pt-24 pb-12 flex items-center justify-center">
+        <div className="purplish-bg min-h-screen pt-24 pb-12 flex items-center justify-center">
             <div className="container mx-auto p-4 md:p-8 max-w-5xl">
                 <div className="bg-white/90 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-3xl p-6 md:p-10 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
